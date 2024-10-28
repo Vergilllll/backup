@@ -26,6 +26,8 @@ protected:
 
 private:
     Ui::backup *ui;
+    bool isDirectoryPack;
+
 private slots:
     void BrowseSource();
     void BrowseDirectory();

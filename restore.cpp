@@ -29,10 +29,8 @@ quint64 restore::calculatePadding(quint64 size) {
 QString getRelativePath(const QString &filepath, const QString &dir) {
     // 创建 QFileInfo 对象
     QFileInfo fileInfo(filepath);
-
     // 创建 QDir 对象
     QDir directory(dir);
-
     // 获取相对路径
     QString relativePath = directory.relativeFilePath(fileInfo.absoluteFilePath());
 
@@ -66,17 +64,31 @@ bool restore::unpackFiles(const QString &inputFilePath, const QString &restorePa
 
     QDataStream in(&inputFile);
     in.setByteOrder(QDataStream::LittleEndian); // 设置字节序，确保一致性
-    // 读取大文件
 
-    QFileInfo dirname = QFileInfo(inputFilePath);
-    qDebug()<<"dirname: "<<dirname.fileName();
-    QString dir;
-    if(dirname.isDir()){
-        dir = dirname.absoluteFilePath();
-        qDebug()<<"dir: "<<dir;
+    // 读取全局元数据
+    QByteArray globalMetadata(METADATA_SIZE, '\0');
+    in.readRawData(globalMetadata.data(), METADATA_SIZE);
+
+    bool isDirectoryPack;
+    QDataStream globalMetaStream(&globalMetadata, QIODevice::ReadOnly);
+    globalMetaStream.setByteOrder(QDataStream::LittleEndian);
+    globalMetaStream >> isDirectoryPack;
+    qDebug()<< isDirectoryPack;
+    if (globalMetaStream.status() != QDataStream::Ok) {
+        qDebug() << "invalid global metadata";
+        return false;
     }
+
+    QString originalRootPath;
+    if (isDirectoryPack) {
+        QByteArray originalRootPathBytes;
+        globalMetaStream >> originalRootPathBytes;
+        originalRootPath = QString::fromUtf8(originalRootPathBytes.trimmed());
+        qDebug() << "Original root path: " << originalRootPath;
+    }
+
     while (!in.atEnd()) {
-        // 读取元数据
+        // 读取文件元数据
         QByteArray metadata(METADATA_SIZE, '\0');
         in.readRawData(metadata.data(), METADATA_SIZE);
 
@@ -86,16 +98,13 @@ bool restore::unpackFiles(const QString &inputFilePath, const QString &restorePa
         metaStream.setByteOrder(QDataStream::LittleEndian);
         metaStream >> filePathBytes;
         metaStream >> fileSize;
-        //qDebug()<< "filesize: "<<fileSize;
+       // qDebug() << "filesize: " << fileSize;
 
         // 检查文件路径和文件大小的有效性
-        if (filePathBytes.isEmpty() ) {
-            qDebug() << "Invalid file entry: filePath is empty ";
+        if (filePathBytes.isEmpty()) {
+            qDebug() << "Invalid file entry: filePath is empty";
             break; // 停止读取，因为后续数据可能是无效的
         }
-
-       // qDebug() << "begin mkdir ";
-
 
         if (metaStream.status() != QDataStream::Ok) {
             qDebug() << "invalid metadata";
@@ -103,25 +112,21 @@ bool restore::unpackFiles(const QString &inputFilePath, const QString &restorePa
         }
 
         // 提取文件名并构建目标文件路径
+        QString filePath = QString::fromUtf8(filePathBytes.trimmed());
+        QFileInfo fileInfo(filePath);
 
-        QFileInfo fileInfo(QString::fromUtf8(filePathBytes.trimmed()));
-        // QString targetFile = restorePath + "/" + fileInfo.fileName();
-        // 提取文件名并构建目标文件路径
-         //QString filePath = QString::fromUtf8(filePathBytes.trimmed());
         QString targetFile;
-        if(!dir.isEmpty()){
-            QString relativePath = getRelativePath(fileInfo.absoluteFilePath(),dir);
+        if (isDirectoryPack) {
+            QString relativePath = getRelativePath(fileInfo.absoluteFilePath(), originalRootPath);
             targetFile = restorePath + "/" + relativePath;
-            qDebug()<<"relativePath: "<<relativePath;
-
-        }
-        else{
+            qDebug() << "relativePath: " << relativePath;
+        } else {
             targetFile = restorePath + "/" + fileInfo.fileName();
         }
 
         qDebug() << "Restoring file to:" << targetFile;
 
-
+        // 创建目标文件目录
         QDir().mkpath(QFileInfo(targetFile).absolutePath());
 
         // 读取文件数据
@@ -134,18 +139,16 @@ bool restore::unpackFiles(const QString &inputFilePath, const QString &restorePa
                 return false;
             }
 
-            //qDebug() << "filedata: "<<fileData;
-            //qDebug() << "filedata.data: "<<fileData.data();
             // 恢复文件
             QFile outFile(targetFile);
             if (outFile.open(QIODevice::WriteOnly)) {
-            outFile.write(fileData);
-            outFile.close();
+                outFile.write(fileData);
+                outFile.close();
             } else {
-              qDebug() << "can't open outfile:" << targetFile;
-              return false;
+                qDebug() << "can't open outfile:" << targetFile;
+                return false;
             }
-        }else {
+        } else {
             // 对于空文件，直接创建一个空文件
             QFile outFile(targetFile);
             if (outFile.open(QIODevice::WriteOnly)) {
@@ -155,18 +158,15 @@ bool restore::unpackFiles(const QString &inputFilePath, const QString &restorePa
                 return false;
             }
         }
+
         // 跳过填充
         quint64 paddingSize = calculatePadding(fileSize);
         in.skipRawData(paddingSize);
-
     }
 
     inputFile.close();
     return true;
 }
-
-
-
 
 void restore::RestoreResources(){
     QString backupPath = ui->bu_res->text();

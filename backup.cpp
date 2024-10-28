@@ -29,6 +29,8 @@ backup::backup(QWidget *parent) :
     connect(this->ui->bu_button,SIGNAL(clicked(bool)),this,SLOT(BrowseBackup()));
     connect(this->ui->bu,SIGNAL(clicked(bool)),this,SLOT(BackupResources()));
     connect(this->ui->return_main,SIGNAL(clicked(bool)),this,SLOT(return_click()));
+
+    isDirectoryPack = false;
 }
 
 backup::~backup()
@@ -50,6 +52,7 @@ void backup::BrowseSource(){
         if (!files.isEmpty()) {
             // 将文件路径转换为字符串，并在LineEdit中显示
             ui->origin_res->setText(files.join(";"));
+            isDirectoryPack = false;
         }
     };
 }
@@ -58,6 +61,7 @@ void backup::BrowseDirectory(){
     QString path = QFileDialog::getExistingDirectory(this, tr("选择备份数据目录"), ui->origin_res->text());
     if (!path.isEmpty()) {
         ui->origin_res->setText(path);
+        isDirectoryPack = true;
     }
 }
 
@@ -93,38 +97,58 @@ bool backup::packFiles(const QList<QFileInfo> &files, const QString &outputFileP
     QDataStream out(&outputFile);
     out.setByteOrder(QDataStream::LittleEndian); // 设置字节序，确保一致性
 
-    foreach (const QFileInfo &fileInfo, files) {
 
-        // 文件元数据
-        QByteArray filePathBytes = fileInfo.absoluteFilePath().toUtf8();
-        quint64 fileSize = fileInfo.size();
-
-        // 确保元数据部分为512字节
-        QByteArray metadata(METADATA_SIZE, '\0');
-        QDataStream metaStream(&metadata, QIODevice::WriteOnly);
-        metaStream.setByteOrder(QDataStream::LittleEndian);
-        metaStream << filePathBytes;
-        metaStream << fileSize;
-        qDebug()<<"filesize: " <<fileInfo.size();
-
-        // 写入元数据
-        out.writeRawData(metadata.constData(), METADATA_SIZE);
-
-        //读取文件数据并写入
-        QFile inputFile(fileInfo.absoluteFilePath());
-        if (inputFile.open(QIODevice::ReadOnly)) {
-            QByteArray fileData = inputFile.readAll();
-            out.writeRawData(fileData.constData(), fileData.size());
-            qDebug()<<"fileData: "<<fileData;
-            inputFile.close();
-        } else {
-             qDebug() << "can't open input file:" << fileInfo.absoluteFilePath();
-            return false;
+    // 记录原始目录的根路径
+    QString originalRootPath;
+    if (isDirectoryPack && !files.isEmpty()) {
+           originalRootPath = QFileInfo(files.first().absoluteFilePath()).absolutePath();
         }
-        // 写入填充
-         quint64 paddingSize = calculatePadding(fileSize);
-         QByteArray padding(paddingSize, '\0');
-         out.writeRawData(padding.constData(), padding.size());
+
+    // 写入全局元数据
+    QByteArray globalMetadata(METADATA_SIZE, '\0');
+    QDataStream globalMetaStream(&globalMetadata, QIODevice::WriteOnly);
+    globalMetaStream.setByteOrder(QDataStream::LittleEndian);
+    globalMetaStream << isDirectoryPack;
+    if (isDirectoryPack) {
+        QByteArray originalRootPathBytes = originalRootPath.toUtf8();
+        globalMetaStream << originalRootPathBytes;
+    }
+    out.writeRawData(globalMetadata.constData(), METADATA_SIZE);
+
+    foreach (const QFileInfo &fileInfo, files) {
+        if (fileInfo.isFile()) {
+            // 文件元数据
+            QByteArray filePathBytes = fileInfo.absoluteFilePath().toUtf8();
+            quint64 fileSize = fileInfo.size();
+
+            // 确保元数据部分为512字节
+            QByteArray metadata(METADATA_SIZE, '\0');
+            QDataStream metaStream(&metadata, QIODevice::WriteOnly);
+            metaStream.setByteOrder(QDataStream::LittleEndian);
+            metaStream << filePathBytes;
+            metaStream << fileSize;
+            //qDebug() << "filesize: " << fileInfo.size();
+
+            // 写入元数据
+            out.writeRawData(metadata.constData(), METADATA_SIZE);
+
+            // 读取文件数据并写入
+            QFile inputFile(fileInfo.absoluteFilePath());
+            if (inputFile.open(QIODevice::ReadOnly)) {
+                QByteArray fileData = inputFile.readAll();
+                out.writeRawData(fileData.constData(), fileData.size());
+                //qDebug() << "fileData: " << fileData;
+                inputFile.close();
+            } else {
+                qDebug() << "can't open input file:" << fileInfo.absoluteFilePath();
+                return false;
+            }
+
+            // 写入填充
+            quint64 paddingSize = calculatePadding(fileSize);
+            QByteArray padding(paddingSize, '\0');
+            out.writeRawData(padding.constData(), padding.size());
+        }
     }
 
     outputFile.close();
