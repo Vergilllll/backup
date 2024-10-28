@@ -121,19 +121,33 @@ bool backup::packFiles(const QList<QFileInfo> &files, const QString &outputFileP
             QByteArray filePathBytes = fileInfo.absoluteFilePath().toUtf8();
             quint64 fileSize = fileInfo.size();
 
+
+            // 计算文件的 CRC32 校验值
+            QFile inputFile(fileInfo.absoluteFilePath());
+            quint32 crc32;
+            if (inputFile.open(QIODevice::ReadOnly)) {
+                QByteArray fileData = inputFile.readAll();
+                crc32 = qChecksum(fileData.constData(), fileData.size());
+                inputFile.close();
+            } else {
+                qDebug() << "can't open input file:" << fileInfo.absoluteFilePath();
+                return false;
+            }
+
             // 确保元数据部分为512字节
             QByteArray metadata(METADATA_SIZE, '\0');
             QDataStream metaStream(&metadata, QIODevice::WriteOnly);
             metaStream.setByteOrder(QDataStream::LittleEndian);
             metaStream << filePathBytes;
             metaStream << fileSize;
+            metaStream << crc32; // 添加 CRC32 校验值
             //qDebug() << "filesize: " << fileInfo.size();
 
             // 写入元数据
             out.writeRawData(metadata.constData(), METADATA_SIZE);
 
             // 读取文件数据并写入
-            QFile inputFile(fileInfo.absoluteFilePath());
+
             if (inputFile.open(QIODevice::ReadOnly)) {
                 QByteArray fileData = inputFile.readAll();
                 out.writeRawData(fileData.constData(), fileData.size());

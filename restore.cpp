@@ -94,10 +94,12 @@ bool restore::unpackFiles(const QString &inputFilePath, const QString &restorePa
 
         QByteArray filePathBytes;
         quint64 fileSize;
+        quint32 expectedCrc32;
         QDataStream metaStream(&metadata, QIODevice::ReadOnly);
         metaStream.setByteOrder(QDataStream::LittleEndian);
         metaStream >> filePathBytes;
         metaStream >> fileSize;
+        metaStream >> expectedCrc32; // 读取 CRC32 校验值
        // qDebug() << "filesize: " << fileSize;
 
         // 检查文件路径和文件大小的有效性
@@ -136,6 +138,15 @@ bool restore::unpackFiles(const QString &inputFilePath, const QString &restorePa
 
             if (in.status() != QDataStream::Ok) {
                 qDebug() << "can't read raw data";
+                return false;
+            }
+
+            // 计算文件的 CRC32 校验值
+            quint32 actualCrc32 = qChecksum(fileData.constData(), fileData.size());
+
+            // 验证 CRC32 校验值
+            if (actualCrc32 != expectedCrc32) {
+                qDebug() << "CRC32 verification failed for file:" << targetFile;
                 return false;
             }
 
