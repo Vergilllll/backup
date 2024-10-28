@@ -34,6 +34,7 @@ public:
     QPushButton *bu;
     QLabel *label;
     QPushButton *return_main;
+    QPushButton *directory_button;
 
     void setupUi(QWidget *backup)
     {
@@ -42,7 +43,7 @@ public:
         backup->resize(402, 282);
         res_button = new QPushButton(backup);
         res_button->setObjectName(QStringLiteral("res_button"));
-        res_button->setGeometry(QRect(290, 100, 80, 20));
+        res_button->setGeometry(QRect(190, 100, 80, 20));
         origin_res = new QLineEdit(backup);
         origin_res->setObjectName(QStringLiteral("origin_res"));
         origin_res->setGeometry(QRect(80, 70, 291, 21));
@@ -72,6 +73,9 @@ public:
         return_main = new QPushButton(backup);
         return_main->setObjectName(QStringLiteral("return_main"));
         return_main->setGeometry(QRect(40, 220, 80, 31));
+        directory_button = new QPushButton(backup);
+        directory_button->setObjectName(QStringLiteral("directory_button"));
+        directory_button->setGeometry(QRect(290, 100, 80, 20));
         label->raise();
         res_button->raise();
         origin_res->raise();
@@ -82,6 +86,7 @@ public:
         bu_button->raise();
         bu->raise();
         return_main->raise();
+        directory_button->raise();
 
         retranslateUi(backup);
 
@@ -91,7 +96,7 @@ public:
     void retranslateUi(QWidget *backup)
     {
         backup->setWindowTitle(QApplication::translate("backup", "Form", Q_NULLPTR));
-        res_button->setText(QApplication::translate("backup", "\346\265\217\350\247\210", Q_NULLPTR));
+        res_button->setText(QApplication::translate("backup", "\346\265\217\350\247\210\346\226\207\344\273\266", Q_NULLPTR));
         res_label->setText(QApplication::translate("backup", "\346\272\220\350\267\257\345\276\204", Q_NULLPTR));
         bu_label->setText(QApplication::translate("backup", "\345\244\207\344\273\275\350\267\257\345\276\204", Q_NULLPTR));
         title->setText(QApplication::translate("backup", "\345\244\207\344\273\275\345\212\237\350\203\275", Q_NULLPTR));
@@ -99,6 +104,7 @@ public:
         bu->setText(QApplication::translate("backup", "\350\277\233\350\241\214\345\244\207\344\273\275", Q_NULLPTR));
         label->setText(QString());
         return_main->setText(QApplication::translate("backup", "\350\277\224\345\233\236\344\270\273\347\225\214\351\235\242", Q_NULLPTR));
+        directory_button->setText(QApplication::translate("backup", "\346\265\217\350\247\210\347\233\256\345\275\225", Q_NULLPTR));
     } // retranslateUi
 
 };

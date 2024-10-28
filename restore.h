@@ -16,6 +16,8 @@ class restore : public QWidget
 public:
     explicit restore(QWidget *parent = nullptr);
     ~restore();
+    bool unpackFiles(const QString &inputFilePath, const QString &restorePath);
+    quint64 calculatePadding(quint64 size);
 
 private:
     Ui::restore *ui;

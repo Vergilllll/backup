@@ -16,6 +16,9 @@ public:
     explicit backup(QWidget *parent = nullptr);
     ~backup();
     void resizeEvent(QResizeEvent *event);
+    void collectFiles(const QString &dirPath, QList<QFileInfo> &files);
+    bool packFiles(const QList<QFileInfo> &files, const QString &outputFilePath);
+
 
 protected:
     signals:
@@ -25,6 +28,7 @@ private:
     Ui::backup *ui;
 private slots:
     void BrowseSource();
+    void BrowseDirectory();
     void BrowseBackup();
     void BackupResources();
     void return_click();

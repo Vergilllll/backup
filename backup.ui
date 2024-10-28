@@ -16,14 +16,14 @@
   <widget class="QPushButton" name="res_button">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>190</x>
      <y>100</y>
      <width>80</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>浏览</string>
+    <string>浏览文件</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="origin_res">
@@ -143,6 +143,19 @@
     <string>返回主界面</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="directory_button">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>100</y>
+     <width>80</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>浏览目录</string>
+   </property>
+  </widget>
   <zorder>label</zorder>
   <zorder>res_button</zorder>
   <zorder>origin_res</zorder>
@@ -153,6 +166,7 @@
   <zorder>bu_button</zorder>
   <zorder>bu</zorder>
   <zorder>return_main</zorder>
+  <zorder>directory_button</zorder>
  </widget>
  <resources/>
  <connections/>
