@@ -18,9 +18,12 @@ public:
     ~restore();
     bool unpackFiles(const QString &inputFilePath, const QString &restorePath);
     quint64 calculatePadding(quint64 size);
+    QByteArray xorEncryptDecrypt(const QByteArray &data, const QByteArray &key);
 
 private:
     Ui::restore *ui;
+    QString password;
+    bool checkPassword(const QByteArray &fileData, const QByteArray &decryptedData) const;
 
 protected:
     signals:
@@ -31,6 +34,7 @@ private slots:
     void BrowseRstSource();
     void RestoreResources();
     void return_click();
+    void setPassword();
 };
 
 #endif // RESTORE_H

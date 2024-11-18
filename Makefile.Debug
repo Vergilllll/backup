@@ -111,7 +111,8 @@ compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_img.cpp
 debug/qrc_img.cpp: img/img.qrc \
 		../bin/rcc.exe \
-		img/top.jpg
+		img/2.png \
+		img/1.png
 	D:\QT\5.9.9\mingw53_32\bin\rcc.exe -name img img\img.qrc -o debug\qrc_img.cpp
 
 compiler_moc_predefs_make_all: debug/moc_predefs.h
@@ -335,6 +336,13 @@ debug/moc_restore.cpp: ../include/QtWidgets/QWidget \
 		../include/QtCore/qfiledevice.h \
 		../include/QtGui/qvector2d.h \
 		../include/QtGui/qtouchdevice.h \
+		../include/QtWidgets/QFileDialog \
+		../include/QtWidgets/qfiledialog.h \
+		../include/QtCore/qdir.h \
+		../include/QtCore/qfileinfo.h \
+		../include/QtWidgets/qdialog.h \
+		../include/QtWidgets/QMessageBox \
+		../include/QtWidgets/qmessagebox.h \
 		restore.h \
 		debug/moc_predefs.h \
 		../bin/moc.exe
@@ -595,7 +603,53 @@ debug/backup.o: backup.cpp backup.h \
 		../include/QtWidgets/qdialog.h \
 		../include/QtWidgets/QMessageBox \
 		../include/QtWidgets/qmessagebox.h \
-		ui_backup.h
+		ui_backup.h \
+		../include/QtCore/QVariant \
+		../include/QtWidgets/QAction \
+		../include/QtWidgets/qaction.h \
+		../include/QtGui/qicon.h \
+		../include/QtWidgets/qactiongroup.h \
+		../include/QtWidgets/QApplication \
+		../include/QtWidgets/qapplication.h \
+		../include/QtCore/qcoreapplication.h \
+		../include/QtCore/qeventloop.h \
+		../include/QtWidgets/qdesktopwidget.h \
+		../include/QtGui/qguiapplication.h \
+		../include/QtGui/qinputmethod.h \
+		../include/QtWidgets/QButtonGroup \
+		../include/QtWidgets/qbuttongroup.h \
+		../include/QtWidgets/QHeaderView \
+		../include/QtWidgets/qheaderview.h \
+		../include/QtWidgets/qabstractitemview.h \
+		../include/QtWidgets/qabstractscrollarea.h \
+		../include/QtWidgets/qframe.h \
+		../include/QtCore/qabstractitemmodel.h \
+		../include/QtCore/qitemselectionmodel.h \
+		../include/QtWidgets/qabstractitemdelegate.h \
+		../include/QtWidgets/qstyleoption.h \
+		../include/QtWidgets/qabstractspinbox.h \
+		../include/QtGui/qvalidator.h \
+		../include/QtCore/qregularexpression.h \
+		../include/QtWidgets/qslider.h \
+		../include/QtWidgets/qabstractslider.h \
+		../include/QtWidgets/qstyle.h \
+		../include/QtWidgets/qtabbar.h \
+		../include/QtWidgets/qtabwidget.h \
+		../include/QtWidgets/qrubberband.h \
+		../include/QtWidgets/QLabel \
+		../include/QtWidgets/qlabel.h \
+		../include/QtWidgets/QLineEdit \
+		../include/QtWidgets/qlineedit.h \
+		../include/QtGui/qtextcursor.h \
+		../include/QtGui/qtextformat.h \
+		../include/QtGui/qpen.h \
+		../include/QtGui/qtextoption.h \
+		../include/QtWidgets/QPushButton \
+		../include/QtWidgets/qpushbutton.h \
+		../include/QtWidgets/qabstractbutton.h \
+		../include/QtCore/QDebug \
+		../include/QtCore/QCryptographicHash \
+		../include/QtCore/qcryptographichash.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\backup.o backup.cpp
 
 debug/main.o: main.cpp widget.h \
@@ -718,7 +772,10 @@ debug/main.o: main.cpp widget.h \
 		../include/QtCore/qeventloop.h \
 		../include/QtWidgets/qdesktopwidget.h \
 		../include/QtGui/qguiapplication.h \
-		../include/QtGui/qinputmethod.h
+		../include/QtGui/qinputmethod.h \
+		../include/QtCore/QLibrary \
+		../include/QtCore/qlibrary.h \
+		../include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o main.cpp
 
 debug/restore.o: restore.cpp restore.h \
@@ -822,7 +879,63 @@ debug/restore.o: restore.cpp restore.h \
 		../include/QtCore/qfiledevice.h \
 		../include/QtGui/qvector2d.h \
 		../include/QtGui/qtouchdevice.h \
-		ui_restore.h
+		../include/QtWidgets/QFileDialog \
+		../include/QtWidgets/qfiledialog.h \
+		../include/QtCore/qdir.h \
+		../include/QtCore/qfileinfo.h \
+		../include/QtWidgets/qdialog.h \
+		../include/QtWidgets/QMessageBox \
+		../include/QtWidgets/qmessagebox.h \
+		ui_restore.h \
+		../include/QtCore/QVariant \
+		../include/QtWidgets/QAction \
+		../include/QtWidgets/qaction.h \
+		../include/QtGui/qicon.h \
+		../include/QtWidgets/qactiongroup.h \
+		../include/QtWidgets/QApplication \
+		../include/QtWidgets/qapplication.h \
+		../include/QtCore/qcoreapplication.h \
+		../include/QtCore/qeventloop.h \
+		../include/QtWidgets/qdesktopwidget.h \
+		../include/QtGui/qguiapplication.h \
+		../include/QtGui/qinputmethod.h \
+		../include/QtWidgets/QButtonGroup \
+		../include/QtWidgets/qbuttongroup.h \
+		../include/QtWidgets/QHeaderView \
+		../include/QtWidgets/qheaderview.h \
+		../include/QtWidgets/qabstractitemview.h \
+		../include/QtWidgets/qabstractscrollarea.h \
+		../include/QtWidgets/qframe.h \
+		../include/QtCore/qabstractitemmodel.h \
+		../include/QtCore/qitemselectionmodel.h \
+		../include/QtWidgets/qabstractitemdelegate.h \
+		../include/QtWidgets/qstyleoption.h \
+		../include/QtWidgets/qabstractspinbox.h \
+		../include/QtGui/qvalidator.h \
+		../include/QtCore/qregularexpression.h \
+		../include/QtWidgets/qslider.h \
+		../include/QtWidgets/qabstractslider.h \
+		../include/QtWidgets/qstyle.h \
+		../include/QtWidgets/qtabbar.h \
+		../include/QtWidgets/qtabwidget.h \
+		../include/QtWidgets/qrubberband.h \
+		../include/QtWidgets/QLabel \
+		../include/QtWidgets/qlabel.h \
+		../include/QtWidgets/QLineEdit \
+		../include/QtWidgets/qlineedit.h \
+		../include/QtGui/qtextcursor.h \
+		../include/QtGui/qtextformat.h \
+		../include/QtGui/qpen.h \
+		../include/QtGui/qtextoption.h \
+		../include/QtWidgets/QPushButton \
+		../include/QtWidgets/qpushbutton.h \
+		../include/QtWidgets/qabstractbutton.h \
+		../include/QtCore/QDebug \
+		../include/QtCore/QCryptographicHash \
+		../include/QtCore/qcryptographichash.h \
+		../include/QtCore/QFile \
+		../include/QtCore/QDataStream \
+		../include/QtCore/QDir
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\restore.o restore.cpp
 
 debug/widget.o: widget.cpp widget.h \
@@ -939,7 +1052,42 @@ debug/widget.o: widget.cpp widget.h \
 		../include/QtWidgets/QMessageBox \
 		../include/QtWidgets/qmessagebox.h \
 		restore.h \
-		ui_widget.h
+		ui_widget.h \
+		../include/QtCore/QVariant \
+		../include/QtWidgets/QAction \
+		../include/QtWidgets/qaction.h \
+		../include/QtWidgets/qactiongroup.h \
+		../include/QtWidgets/QApplication \
+		../include/QtWidgets/qapplication.h \
+		../include/QtCore/qcoreapplication.h \
+		../include/QtCore/qeventloop.h \
+		../include/QtWidgets/qdesktopwidget.h \
+		../include/QtGui/qguiapplication.h \
+		../include/QtGui/qinputmethod.h \
+		../include/QtWidgets/QButtonGroup \
+		../include/QtWidgets/qbuttongroup.h \
+		../include/QtWidgets/QHeaderView \
+		../include/QtWidgets/qheaderview.h \
+		../include/QtWidgets/qabstractitemview.h \
+		../include/QtWidgets/qabstractscrollarea.h \
+		../include/QtWidgets/qframe.h \
+		../include/QtCore/qabstractitemmodel.h \
+		../include/QtCore/qitemselectionmodel.h \
+		../include/QtWidgets/qabstractitemdelegate.h \
+		../include/QtWidgets/qstyleoption.h \
+		../include/QtWidgets/qabstractspinbox.h \
+		../include/QtGui/qvalidator.h \
+		../include/QtCore/qregularexpression.h \
+		../include/QtWidgets/qslider.h \
+		../include/QtWidgets/qabstractslider.h \
+		../include/QtWidgets/qstyle.h \
+		../include/QtWidgets/qtabbar.h \
+		../include/QtWidgets/qrubberband.h \
+		../include/QtWidgets/QLabel \
+		../include/QtWidgets/qlabel.h \
+		../include/QtWidgets/QPushButton \
+		../include/QtWidgets/qpushbutton.h \
+		../include/QtWidgets/qabstractbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\widget.o widget.cpp
 
 debug/qrc_img.o: debug/qrc_img.cpp 

@@ -18,7 +18,7 @@ public:
     void resizeEvent(QResizeEvent *event);
     void collectFiles(const QString &dirPath, QList<QFileInfo> &files);
     bool packFiles(const QList<QFileInfo> &files, const QString &outputFilePath);
-
+    QByteArray xorEncryptDecrypt(const QByteArray &data, const QByteArray &key);
 
 protected:
     signals:
@@ -27,6 +27,7 @@ protected:
 private:
     Ui::backup *ui;
     bool isDirectoryPack;
+    QString password;
 
 private slots:
     void BrowseSource();
@@ -34,6 +35,7 @@ private slots:
     void BrowseBackup();
     void BackupResources();
     void return_click();
+    void SetPassWord();
 };
 
 #endif // BACKUP_H

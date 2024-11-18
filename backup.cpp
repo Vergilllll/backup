@@ -1,7 +1,7 @@
 #include "backup.h"
 #include "ui_backup.h"
 #include <QDebug>
-
+#include <QCryptographicHash>
 
 const int METADATA_SIZE = 512;
 
@@ -19,17 +19,17 @@ backup::backup(QWidget *parent) :
     bu_oldWidth=this->width();
     bu_oldHeight=this->height();
     bu_objList = this->children();
-     foreach (QObject* obj, bu_objList)
-      {
-          bu_objMap.insert(obj, obj->property("geometry").toRect());
-      }
+    foreach (QObject* obj, bu_objList)
+    {
+        bu_objMap.insert(obj, obj->property("geometry").toRect());
+    }
 
     connect(this->ui->res_button,SIGNAL(clicked(bool)),this,SLOT(BrowseSource()));
     connect(this->ui->directory_button,SIGNAL(clicked(bool)),this,SLOT(BrowseDirectory()));
     connect(this->ui->bu_button,SIGNAL(clicked(bool)),this,SLOT(BrowseBackup()));
     connect(this->ui->bu,SIGNAL(clicked(bool)),this,SLOT(BackupResources()));
     connect(this->ui->return_main,SIGNAL(clicked(bool)),this,SLOT(return_click()));
-
+    connect(this->ui->pwd_button,SIGNAL(clicked(bool)),this,SLOT(SetPassWord()));
     isDirectoryPack = false;
 }
 
@@ -41,6 +41,15 @@ backup::~backup()
 // 计算填充字节数
 quint64 calculatePadding(quint64 size) {
     return (512 - (size % 512)) % 512;
+}
+
+// XOR 加密/解密函数
+QByteArray backup::xorEncryptDecrypt(const QByteArray &data, const QByteArray &key) {
+    QByteArray result(data.size(), 0);
+    for (int i = 0; i < data.size(); ++i) {
+        result[i] = data[i] ^ key[i % key.size()];
+    }
+    return result;
 }
 
 
@@ -69,6 +78,15 @@ void backup::BrowseBackup(){
     QString path = QFileDialog::getExistingDirectory(this, tr("选择备份路径"), ui->bu_res->text());
     if (!path.isEmpty()) {
         ui->bu_res->setText(path);
+    }
+}
+
+void backup::SetPassWord() {
+    password = ui->password->text();
+    if (!this->password.isEmpty()) {
+        QMessageBox::information(this, tr("提示"), tr("密码已设置成功！"));
+    } else {
+        QMessageBox::warning(this, tr("警告"), tr("密码不能为空！"));
     }
 }
 
@@ -101,8 +119,8 @@ bool backup::packFiles(const QList<QFileInfo> &files, const QString &outputFileP
     // 记录原始目录的根路径
     QString originalRootPath;
     if (isDirectoryPack && !files.isEmpty()) {
-           originalRootPath = QFileInfo(files.first().absoluteFilePath()).absolutePath();
-        }
+        originalRootPath = QFileInfo(files.first().absoluteFilePath()).absolutePath();
+    }
 
     // 写入全局元数据
     QByteArray globalMetadata(METADATA_SIZE, '\0');
@@ -146,12 +164,11 @@ bool backup::packFiles(const QList<QFileInfo> &files, const QString &outputFileP
             // 写入元数据
             out.writeRawData(metadata.constData(), METADATA_SIZE);
 
-            // 读取文件数据并写入
-
+            // 读取文件数据并加密
             if (inputFile.open(QIODevice::ReadOnly)) {
                 QByteArray fileData = inputFile.readAll();
-                out.writeRawData(fileData.constData(), fileData.size());
-                //qDebug() << "fileData: " << fileData;
+                QByteArray encryptedData = xorEncryptDecrypt(fileData, password.toUtf8());
+                out.writeRawData(encryptedData.constData(), encryptedData.size());
                 inputFile.close();
             } else {
                 qDebug() << "can't open input file:" << fileInfo.absoluteFilePath();
@@ -172,57 +189,62 @@ bool backup::packFiles(const QList<QFileInfo> &files, const QString &outputFileP
 
 void backup::BackupResources(){
     QString sourcePathsStr = ui->origin_res->text();
-        QString backupPath = ui->bu_res->text();
+    QString backupPath = ui->bu_res->text();
 
-        if (sourcePathsStr.isEmpty() || backupPath.isEmpty()) {
-            QMessageBox::information(this, tr("提示"), tr("请选择源路径和备份目录！"));
-            return;
-        }
+    if (sourcePathsStr.isEmpty() || backupPath.isEmpty()) {
+        QMessageBox::information(this, tr("提示"), tr("请选择源路径和备份目录！"));
+        return;
+    }
 
-        if (!QDir().mkpath(backupPath)) {
-            QMessageBox::critical(this, tr("错误"), tr("无法创建备份目录：%1").arg(backupPath));
-            return;
-        }
+    if (this->password.isEmpty()) {
+         QMessageBox::warning(this, tr("警告"), tr("请先设置密码！"));
+         return;
+     }
 
-        QStringList sourcePaths = sourcePathsStr.split(";", QString::SkipEmptyParts);
+    if (!QDir().mkpath(backupPath)) {
+        QMessageBox::critical(this, tr("错误"), tr("无法创建备份目录：%1").arg(backupPath));
+        return;
+    }
 
-        QList<QFileInfo> files;
-        foreach (const QString &sourcePath, sourcePaths) {
-            QFileInfo fileInfo(sourcePath);
-            //遍历目录下所有文件，空目录忽略
-            if (fileInfo.isDir()) {
-                collectFiles(sourcePath, files);
-            } else if (fileInfo.isFile()) {
-                files.append(fileInfo);
-            } else {
-                QMessageBox::warning(this, tr("警告"), tr("跳过无效项：%1").arg(sourcePath));
-            }
-        }
+    QStringList sourcePaths = sourcePathsStr.split(";", QString::SkipEmptyParts);
 
-        if (files.isEmpty()) {
-            QMessageBox::warning(this, tr("警告"), tr("没有找到可备份的文件。"));
-            return;
-        }
-
-        // 生成输出文件路径
-        QString outputFileName;
-        if (sourcePaths.size() == 1) {
-            QFileInfo sourceInfo(sourcePaths.first());
-            if (sourceInfo.isDir()) {
-                outputFileName = sourceInfo.fileName() + "_backup.dat";
-            } else {
-                outputFileName = sourceInfo.completeBaseName() + "_backup.dat";
-            }
+    QList<QFileInfo> files;
+    foreach (const QString &sourcePath, sourcePaths) {
+        QFileInfo fileInfo(sourcePath);
+        //遍历目录下所有文件，空目录忽略
+        if (fileInfo.isDir()) {
+            collectFiles(sourcePath, files);
+        } else if (fileInfo.isFile()) {
+            files.append(fileInfo);
         } else {
-            outputFileName = "multi_backup.dat"; // 如果有多个源路径，使用默认名称
+            QMessageBox::warning(this, tr("警告"), tr("跳过无效项：%1").arg(sourcePath));
         }
+    }
 
-        QString outputFilePath = backupPath + "/" + outputFileName;
-        if (packFiles(files, outputFilePath)) {
-            QMessageBox::information(this, tr("成功"), tr("备份成功！"));
+    if (files.isEmpty()) {
+        QMessageBox::warning(this, tr("警告"), tr("没有找到可备份的文件。"));
+        return;
+    }
+
+    // 生成输出文件路径
+    QString outputFileName;
+    if (sourcePaths.size() == 1) {
+        QFileInfo sourceInfo(sourcePaths.first());
+        if (sourceInfo.isDir()) {
+            outputFileName = sourceInfo.fileName() + "_backup.dat";
         } else {
-            QMessageBox::critical(this, tr("错误"), tr("备份失败！"));
+            outputFileName = sourceInfo.completeBaseName() + "_backup.dat";
         }
+    } else {
+        outputFileName = "multi_backup.dat"; // 如果有多个源路径，使用默认名称
+    }
+
+    QString outputFilePath = backupPath + "/" + outputFileName;
+    if (packFiles(files, outputFilePath)) {
+        QMessageBox::information(this, tr("成功"), tr("备份成功！"));
+    } else {
+        QMessageBox::critical(this, tr("错误"), tr("备份失败！"));
+    }
 }
 
 
@@ -240,9 +262,9 @@ void backup::resizeEvent(QResizeEvent *event)
     double  scaleX = Width*1.0/bu_oldWidth*1.0;
     double  scaleY = Height*1.0/bu_oldHeight*1.0;
     QMap<QObject*, QRect>::iterator iter;
-       for (iter = bu_objMap.begin(); iter != bu_objMap.end(); iter++)
-       {
-           iter.key()->setProperty("geometry", QRect(iter.value().x() * scaleX, iter.value().y() * scaleY,
-                                                     iter.value().width() * scaleX, iter.value().height() * scaleY));
-       }
+    for (iter = bu_objMap.begin(); iter != bu_objMap.end(); iter++)
+    {
+        iter.key()->setProperty("geometry", QRect(iter.value().x() * scaleX, iter.value().y() * scaleY,
+                                                  iter.value().width() * scaleX, iter.value().height() * scaleY));
+    }
 }
