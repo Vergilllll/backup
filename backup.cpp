@@ -34,7 +34,7 @@ backup::backup(QWidget *parent) :
     connect(this->ui->return_main,SIGNAL(clicked(bool)),this,SLOT(return_click()));
     connect(this->ui->pwd_button,SIGNAL(clicked(bool)),this,SLOT(SetPassWord()));
     connect(this->ui->extra_button,SIGNAL(clicked(bool)),this,SLOT(extra_click()));
-    connect(ex,&extra::backToMain,this,&backup::show);
+    connect(ex,&extra::backToMain,this,&backup::return_click);
     isDirectoryPack = false;
 }
 

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_extra_t {
-    QByteArrayData data[14];
-    char stringdata0[194];
+    QByteArrayData data[20];
+    char stringdata0[295];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,22 +37,30 @@ QT_MOC_LITERAL(2, 17, 0), // ""
 QT_MOC_LITERAL(3, 18, 12), // "BrowseSource"
 QT_MOC_LITERAL(4, 31, 15), // "BrowseDirectory"
 QT_MOC_LITERAL(5, 47, 16), // "BrowseBackupPath"
-QT_MOC_LITERAL(6, 64, 16), // "ConfirmSelection"
-QT_MOC_LITERAL(7, 81, 20), // "startScheduledBackup"
-QT_MOC_LITERAL(8, 102, 19), // "stopScheduledBackup"
-QT_MOC_LITERAL(9, 122, 13), // "performBackup"
-QT_MOC_LITERAL(10, 136, 14), // "showMainWindow"
-QT_MOC_LITERAL(11, 151, 13), // "onWindowClose"
-QT_MOC_LITERAL(12, 165, 16), // "closeApplication"
-QT_MOC_LITERAL(13, 182, 11) // "SetPassWord"
+QT_MOC_LITERAL(6, 64, 22), // "ConfirmScheduledBackup"
+QT_MOC_LITERAL(7, 87, 21), // "ConfirmRealTimeBackup"
+QT_MOC_LITERAL(8, 109, 20), // "startScheduledBackup"
+QT_MOC_LITERAL(9, 130, 19), // "stopScheduledBackup"
+QT_MOC_LITERAL(10, 150, 19), // "startRealTimeBackup"
+QT_MOC_LITERAL(11, 170, 18), // "stopRealTimeBackup"
+QT_MOC_LITERAL(12, 189, 9), // "onTimeout"
+QT_MOC_LITERAL(13, 199, 14), // "showMainWindow"
+QT_MOC_LITERAL(14, 214, 13), // "onWindowClose"
+QT_MOC_LITERAL(15, 228, 16), // "closeApplication"
+QT_MOC_LITERAL(16, 245, 11), // "SetPassWord"
+QT_MOC_LITERAL(17, 257, 13), // "onFileChanged"
+QT_MOC_LITERAL(18, 271, 4), // "path"
+QT_MOC_LITERAL(19, 276, 18) // "onDirectoryChanged"
 
     },
     "extra\0backToMain\0\0BrowseSource\0"
     "BrowseDirectory\0BrowseBackupPath\0"
-    "ConfirmSelection\0startScheduledBackup\0"
-    "stopScheduledBackup\0performBackup\0"
-    "showMainWindow\0onWindowClose\0"
-    "closeApplication\0SetPassWord"
+    "ConfirmScheduledBackup\0ConfirmRealTimeBackup\0"
+    "startScheduledBackup\0stopScheduledBackup\0"
+    "startRealTimeBackup\0stopRealTimeBackup\0"
+    "onTimeout\0showMainWindow\0onWindowClose\0"
+    "closeApplication\0SetPassWord\0onFileChanged\0"
+    "path\0onDirectoryChanged"
 };
 #undef QT_MOC_LITERAL
 
@@ -62,7 +70,7 @@ static const uint qt_meta_data_extra[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -70,20 +78,25 @@ static const uint qt_meta_data_extra[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x06 /* Public */,
+       1,    0,   99,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   75,    2, 0x08 /* Private */,
-       4,    0,   76,    2, 0x08 /* Private */,
-       5,    0,   77,    2, 0x08 /* Private */,
-       6,    0,   78,    2, 0x08 /* Private */,
-       7,    0,   79,    2, 0x08 /* Private */,
-       8,    0,   80,    2, 0x08 /* Private */,
-       9,    0,   81,    2, 0x08 /* Private */,
-      10,    0,   82,    2, 0x08 /* Private */,
-      11,    0,   83,    2, 0x08 /* Private */,
-      12,    0,   84,    2, 0x08 /* Private */,
-      13,    0,   85,    2, 0x08 /* Private */,
+       3,    0,  100,    2, 0x08 /* Private */,
+       4,    0,  101,    2, 0x08 /* Private */,
+       5,    0,  102,    2, 0x08 /* Private */,
+       6,    0,  103,    2, 0x08 /* Private */,
+       7,    0,  104,    2, 0x08 /* Private */,
+       8,    0,  105,    2, 0x08 /* Private */,
+       9,    0,  106,    2, 0x08 /* Private */,
+      10,    0,  107,    2, 0x08 /* Private */,
+      11,    0,  108,    2, 0x08 /* Private */,
+      12,    0,  109,    2, 0x08 /* Private */,
+      13,    0,  110,    2, 0x08 /* Private */,
+      14,    0,  111,    2, 0x08 /* Private */,
+      15,    0,  112,    2, 0x08 /* Private */,
+      16,    0,  113,    2, 0x08 /* Private */,
+      17,    1,  114,    2, 0x08 /* Private */,
+      19,    1,  117,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -100,6 +113,11 @@ static const uint qt_meta_data_extra[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   18,
+    QMetaType::Void, QMetaType::QString,   18,
 
        0        // eod
 };
@@ -114,14 +132,19 @@ void extra::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 1: _t->BrowseSource(); break;
         case 2: _t->BrowseDirectory(); break;
         case 3: _t->BrowseBackupPath(); break;
-        case 4: _t->ConfirmSelection(); break;
-        case 5: _t->startScheduledBackup(); break;
-        case 6: _t->stopScheduledBackup(); break;
-        case 7: _t->performBackup(); break;
-        case 8: _t->showMainWindow(); break;
-        case 9: _t->onWindowClose(); break;
-        case 10: _t->closeApplication(); break;
-        case 11: _t->SetPassWord(); break;
+        case 4: _t->ConfirmScheduledBackup(); break;
+        case 5: _t->ConfirmRealTimeBackup(); break;
+        case 6: _t->startScheduledBackup(); break;
+        case 7: _t->stopScheduledBackup(); break;
+        case 8: _t->startRealTimeBackup(); break;
+        case 9: _t->stopRealTimeBackup(); break;
+        case 10: _t->onTimeout(); break;
+        case 11: _t->showMainWindow(); break;
+        case 12: _t->onWindowClose(); break;
+        case 13: _t->closeApplication(); break;
+        case 14: _t->SetPassWord(); break;
+        case 15: _t->onFileChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 16: _t->onDirectoryChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -134,7 +157,6 @@ void extra::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
             }
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject extra::staticMetaObject = {
@@ -162,13 +184,13 @@ int extra::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 17;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 17)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 17;
     }
     return _id;
 }
