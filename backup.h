@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QFileDialog>
 #include <QMessageBox>
+#include "extra.h"
 namespace Ui {
 class backup;
 }
@@ -26,6 +27,7 @@ protected:
 
 private:
     Ui::backup *ui;
+    extra* ex;
     bool isDirectoryPack;
     QString password;
 
@@ -35,6 +37,7 @@ private slots:
     void BrowseBackup();
     void BackupResources();
     void return_click();
+    void extra_click();
     void SetPassWord();
 };
 

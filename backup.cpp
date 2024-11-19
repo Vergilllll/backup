@@ -24,12 +24,17 @@ backup::backup(QWidget *parent) :
         bu_objMap.insert(obj, obj->property("geometry").toRect());
     }
 
+    ex = new extra();
+    ex->hide();
+
     connect(this->ui->res_button,SIGNAL(clicked(bool)),this,SLOT(BrowseSource()));
     connect(this->ui->directory_button,SIGNAL(clicked(bool)),this,SLOT(BrowseDirectory()));
     connect(this->ui->bu_button,SIGNAL(clicked(bool)),this,SLOT(BrowseBackup()));
     connect(this->ui->bu,SIGNAL(clicked(bool)),this,SLOT(BackupResources()));
     connect(this->ui->return_main,SIGNAL(clicked(bool)),this,SLOT(return_click()));
     connect(this->ui->pwd_button,SIGNAL(clicked(bool)),this,SLOT(SetPassWord()));
+    connect(this->ui->extra_button,SIGNAL(clicked(bool)),this,SLOT(extra_click()));
+    connect(ex,&extra::backToMain,this,&backup::show);
     isDirectoryPack = false;
 }
 
@@ -253,6 +258,10 @@ void backup::return_click(){
     this->hide();
 }
 
+void backup::extra_click(){
+    this->hide();
+    ex->show();
+}
 
 void backup::resizeEvent(QResizeEvent *event)
 {

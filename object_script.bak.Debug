@@ -1,0 +1,12 @@
+INPUT(
+./debug\backup.o
+./debug\extra.o
+./debug\main.o
+./debug\restore.o
+./debug\widget.o
+./debug\qrc_img.o
+./debug\moc_backup.o
+./debug\moc_extra.o
+./debug\moc_restore.o
+./debug\moc_widget.o
+);

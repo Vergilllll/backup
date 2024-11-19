@@ -38,6 +38,7 @@ public:
     QPushButton *pwd_button;
     QLabel *password_label;
     QLineEdit *password;
+    QPushButton *extra_button;
 
     void setupUi(QWidget *backup)
     {
@@ -68,7 +69,7 @@ public:
         bu_button->setGeometry(QRect(380, 150, 80, 20));
         bu = new QPushButton(backup);
         bu->setObjectName(QStringLiteral("bu"));
-        bu->setGeometry(QRect(360, 250, 91, 51));
+        bu->setGeometry(QRect(170, 250, 91, 51));
         label = new QLabel(backup);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(0, 0, 469, 323));
@@ -88,6 +89,9 @@ public:
         password = new QLineEdit(backup);
         password->setObjectName(QStringLiteral("password"));
         password->setGeometry(QRect(80, 200, 291, 20));
+        extra_button = new QPushButton(backup);
+        extra_button->setObjectName(QStringLiteral("extra_button"));
+        extra_button->setGeometry(QRect(320, 250, 101, 51));
         label->raise();
         res_button->raise();
         origin_res->raise();
@@ -102,6 +106,7 @@ public:
         pwd_button->raise();
         password_label->raise();
         password->raise();
+        extra_button->raise();
 
         retranslateUi(backup);
 
@@ -122,6 +127,7 @@ public:
         directory_button->setText(QApplication::translate("backup", "\346\265\217\350\247\210\347\233\256\345\275\225", Q_NULLPTR));
         pwd_button->setText(QApplication::translate("backup", "\347\241\256\350\256\244\345\257\206\347\240\201", Q_NULLPTR));
         password_label->setText(QApplication::translate("backup", "\345\212\240\345\257\206\345\257\206\347\240\201", Q_NULLPTR));
+        extra_button->setText(QApplication::translate("backup", "\346\233\264\345\244\232\345\244\207\344\273\275\350\256\276\347\275\256", Q_NULLPTR));
     } // retranslateUi
 
 };

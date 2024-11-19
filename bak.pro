@@ -10,17 +10,20 @@ CONFIG += c++11
 
 SOURCES += \
     backup.cpp \
+    extra.cpp \
     main.cpp \
     restore.cpp \
     widget.cpp
 
 HEADERS += \
     backup.h \
+    extra.h \
     restore.h \
     widget.h
 
 FORMS += \
     backup.ui \
+    extra.ui \
     restore.ui \
     widget.ui
 

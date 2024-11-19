@@ -1,0 +1,12 @@
+INPUT(
+./release\backup.o
+./release\extra.o
+./release\main.o
+./release\restore.o
+./release\widget.o
+./release\qrc_img.o
+./release\moc_backup.o
+./release\moc_extra.o
+./release\moc_restore.o
+./release\moc_widget.o
+);
