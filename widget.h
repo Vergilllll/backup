@@ -6,7 +6,9 @@
 #include "restore.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class widget; }
+namespace Ui {
+class widget;
+}
 QT_END_NAMESPACE
 
 class widget : public QMainWindow
@@ -19,12 +21,11 @@ public:
 
 private:
     Ui::widget *ui;
-    backup* bu;
-    restore* rst;
+    backup *bu;
+    restore *rst;
 private slots:
-   void new_bakwidget();
-   void new_rstwidget();
-   void resizeEvent(QResizeEvent* event);
-
+    void new_bakwidget();
+    void new_rstwidget();
+    void resizeEvent(QResizeEvent *event);
 };
 #endif // WIDGET_H

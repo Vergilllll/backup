@@ -11,14 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>数据恢复</string>
   </property>
   <widget class="QLineEdit" name="rst_res">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>90</x>
      <y>120</y>
-     <width>291</width>
+     <width>281</width>
      <height>20</height>
     </rect>
    </property>
@@ -27,9 +27,9 @@
    <property name="geometry">
     <rect>
      <x>380</x>
-     <y>70</y>
+     <y>68</y>
      <width>80</width>
-     <height>20</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="text">
@@ -39,9 +39,9 @@
   <widget class="QLineEdit" name="bu_res">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>90</x>
      <y>70</y>
-     <width>291</width>
+     <width>281</width>
      <height>21</height>
     </rect>
    </property>
@@ -56,14 +56,14 @@
     </rect>
    </property>
    <property name="text">
-    <string>恢复路径</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;恢复路径&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="rst">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>240</y>
+     <x>180</x>
+     <y>230</y>
      <width>91</width>
      <height>51</height>
     </rect>
@@ -82,16 +82,22 @@
     </rect>
    </property>
    <property name="text">
-    <string>数据路径</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;数据路径&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="rst_button">
    <property name="geometry">
     <rect>
      <x>380</x>
-     <y>120</y>
+     <y>118</y>
      <width>80</width>
-     <height>20</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="text">
@@ -101,21 +107,21 @@
   <widget class="QLabel" name="title">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>180</x>
      <y>20</y>
-     <width>131</width>
-     <height>20</height>
+     <width>161</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>数据恢复功能</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700; color:#ffffff;&quot;&gt;数据恢复功能&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="return_main">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>220</y>
+     <y>20</y>
      <width>80</width>
      <height>31</height>
     </rect>
@@ -145,20 +151,20 @@
     <rect>
      <x>20</x>
      <y>170</y>
-     <width>54</width>
-     <height>12</height>
+     <width>71</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>解密密钥</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;解密密钥&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="password">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>90</x>
      <y>170</y>
-     <width>291</width>
+     <width>281</width>
      <height>20</height>
     </rect>
    </property>
@@ -167,9 +173,9 @@
    <property name="geometry">
     <rect>
      <x>380</x>
-     <y>170</y>
+     <y>168</y>
      <width>80</width>
-     <height>20</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="text">

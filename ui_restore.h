@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'restore.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.9
+** Created by: Qt User Interface Compiler version 5.15.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,10 +10,7 @@
 #define UI_RESTORE_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -41,48 +38,50 @@ public:
     void setupUi(QWidget *restore)
     {
         if (restore->objectName().isEmpty())
-            restore->setObjectName(QStringLiteral("restore"));
+            restore->setObjectName(QString::fromUtf8("restore"));
         restore->resize(469, 323);
         rst_res = new QLineEdit(restore);
-        rst_res->setObjectName(QStringLiteral("rst_res"));
-        rst_res->setGeometry(QRect(80, 120, 291, 20));
+        rst_res->setObjectName(QString::fromUtf8("rst_res"));
+        rst_res->setGeometry(QRect(90, 120, 281, 20));
         res_button = new QPushButton(restore);
-        res_button->setObjectName(QStringLiteral("res_button"));
-        res_button->setGeometry(QRect(380, 70, 80, 20));
+        res_button->setObjectName(QString::fromUtf8("res_button"));
+        res_button->setGeometry(QRect(380, 68, 80, 23));
         bu_res = new QLineEdit(restore);
-        bu_res->setObjectName(QStringLiteral("bu_res"));
-        bu_res->setGeometry(QRect(80, 70, 291, 21));
+        bu_res->setObjectName(QString::fromUtf8("bu_res"));
+        bu_res->setGeometry(QRect(90, 70, 281, 21));
         rst_label = new QLabel(restore);
-        rst_label->setObjectName(QStringLiteral("rst_label"));
+        rst_label->setObjectName(QString::fromUtf8("rst_label"));
         rst_label->setGeometry(QRect(20, 120, 61, 20));
         rst = new QPushButton(restore);
-        rst->setObjectName(QStringLiteral("rst"));
-        rst->setGeometry(QRect(310, 240, 91, 51));
+        rst->setObjectName(QString::fromUtf8("rst"));
+        rst->setGeometry(QRect(180, 230, 91, 51));
         res_label = new QLabel(restore);
-        res_label->setObjectName(QStringLiteral("res_label"));
+        res_label->setObjectName(QString::fromUtf8("res_label"));
         res_label->setGeometry(QRect(20, 70, 151, 20));
+        res_label->setTextFormat(Qt::AutoText);
+        res_label->setScaledContents(false);
         rst_button = new QPushButton(restore);
-        rst_button->setObjectName(QStringLiteral("rst_button"));
-        rst_button->setGeometry(QRect(380, 120, 80, 20));
+        rst_button->setObjectName(QString::fromUtf8("rst_button"));
+        rst_button->setGeometry(QRect(380, 118, 80, 23));
         title = new QLabel(restore);
-        title->setObjectName(QStringLiteral("title"));
-        title->setGeometry(QRect(160, 20, 131, 20));
+        title->setObjectName(QString::fromUtf8("title"));
+        title->setGeometry(QRect(180, 20, 161, 31));
         return_main = new QPushButton(restore);
-        return_main->setObjectName(QStringLiteral("return_main"));
-        return_main->setGeometry(QRect(20, 220, 80, 31));
+        return_main->setObjectName(QString::fromUtf8("return_main"));
+        return_main->setGeometry(QRect(20, 20, 80, 31));
         label_pic = new QLabel(restore);
-        label_pic->setObjectName(QStringLiteral("label_pic"));
+        label_pic->setObjectName(QString::fromUtf8("label_pic"));
         label_pic->setGeometry(QRect(0, 0, 469, 323));
-        label_pic->setStyleSheet(QStringLiteral("border-image: url(:/new/prefix1/2.png);"));
+        label_pic->setStyleSheet(QString::fromUtf8("border-image: url(:/new/prefix1/2.png);"));
         pwd_label = new QLabel(restore);
-        pwd_label->setObjectName(QStringLiteral("pwd_label"));
-        pwd_label->setGeometry(QRect(20, 170, 54, 12));
+        pwd_label->setObjectName(QString::fromUtf8("pwd_label"));
+        pwd_label->setGeometry(QRect(20, 170, 71, 21));
         password = new QLineEdit(restore);
-        password->setObjectName(QStringLiteral("password"));
-        password->setGeometry(QRect(80, 170, 291, 20));
+        password->setObjectName(QString::fromUtf8("password"));
+        password->setGeometry(QRect(90, 170, 281, 20));
         pwd_button = new QPushButton(restore);
-        pwd_button->setObjectName(QStringLiteral("pwd_button"));
-        pwd_button->setGeometry(QRect(380, 170, 80, 20));
+        pwd_button->setObjectName(QString::fromUtf8("pwd_button"));
+        pwd_button->setGeometry(QRect(380, 168, 80, 24));
         label_pic->raise();
         rst_res->raise();
         res_button->raise();
@@ -104,17 +103,17 @@ public:
 
     void retranslateUi(QWidget *restore)
     {
-        restore->setWindowTitle(QApplication::translate("restore", "Form", Q_NULLPTR));
-        res_button->setText(QApplication::translate("restore", "\346\265\217\350\247\210", Q_NULLPTR));
-        rst_label->setText(QApplication::translate("restore", "\346\201\242\345\244\215\350\267\257\345\276\204", Q_NULLPTR));
-        rst->setText(QApplication::translate("restore", "\350\277\233\350\241\214\346\201\242\345\244\215", Q_NULLPTR));
-        res_label->setText(QApplication::translate("restore", "\346\225\260\346\215\256\350\267\257\345\276\204", Q_NULLPTR));
-        rst_button->setText(QApplication::translate("restore", "\346\265\217\350\247\210", Q_NULLPTR));
-        title->setText(QApplication::translate("restore", "\346\225\260\346\215\256\346\201\242\345\244\215\345\212\237\350\203\275", Q_NULLPTR));
-        return_main->setText(QApplication::translate("restore", "\350\277\224\345\233\236\344\270\273\347\225\214\351\235\242", Q_NULLPTR));
+        restore->setWindowTitle(QCoreApplication::translate("restore", "\346\225\260\346\215\256\346\201\242\345\244\215", nullptr));
+        res_button->setText(QCoreApplication::translate("restore", "\346\265\217\350\247\210", nullptr));
+        rst_label->setText(QCoreApplication::translate("restore", "<html><head/><body><p><span style=\" color:#ffffff;\">\346\201\242\345\244\215\350\267\257\345\276\204</span></p></body></html>", nullptr));
+        rst->setText(QCoreApplication::translate("restore", "\350\277\233\350\241\214\346\201\242\345\244\215", nullptr));
+        res_label->setText(QCoreApplication::translate("restore", "<html><head/><body><p><span style=\" color:#ffffff;\">\346\225\260\346\215\256\350\267\257\345\276\204</span></p></body></html>", nullptr));
+        rst_button->setText(QCoreApplication::translate("restore", "\346\265\217\350\247\210", nullptr));
+        title->setText(QCoreApplication::translate("restore", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:700; color:#ffffff;\">\346\225\260\346\215\256\346\201\242\345\244\215\345\212\237\350\203\275</span></p></body></html>", nullptr));
+        return_main->setText(QCoreApplication::translate("restore", "\350\277\224\345\233\236\344\270\273\347\225\214\351\235\242", nullptr));
         label_pic->setText(QString());
-        pwd_label->setText(QApplication::translate("restore", "\350\247\243\345\257\206\345\257\206\351\222\245", Q_NULLPTR));
-        pwd_button->setText(QApplication::translate("restore", "\347\241\256\350\256\244\345\257\206\347\240\201", Q_NULLPTR));
+        pwd_label->setText(QCoreApplication::translate("restore", "<html><head/><body><p><span style=\" color:#ffffff;\">\350\247\243\345\257\206\345\257\206\351\222\245</span></p></body></html>", nullptr));
+        pwd_button->setText(QCoreApplication::translate("restore", "\347\241\256\350\256\244\345\257\206\347\240\201", nullptr));
     } // retranslateUi
 
 };

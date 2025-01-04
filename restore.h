@@ -1,9 +1,12 @@
 #ifndef RESTORE_H
 #define RESTORE_H
 
-#include <QWidget>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QWidget>
+#include <zlib.h>
+#include <QTemporaryFile>
+#include <QProgressDialog>
 
 namespace Ui {
 class restore;
@@ -16,9 +19,12 @@ class restore : public QWidget
 public:
     explicit restore(QWidget *parent = nullptr);
     ~restore();
-    bool unpackFiles(const QString &inputFilePath, const QString &restorePath);
+    bool unpackFilesWithProgress(const QString &inputFilePath, const QString &restorePath, QProgressDialog &progressDialog);
     quint64 calculatePadding(quint64 size);
     QByteArray xorEncryptDecrypt(const QByteArray &data, const QByteArray &key);
+    bool decompressWithZlibStream(QIODevice &inputFile, QString &tempFilePath);
+    void clearAllText();
+    int countFilesInBackup(const QString &inputFilePath);
 
 private:
     Ui::restore *ui;
@@ -26,8 +32,8 @@ private:
     bool checkPassword(const QByteArray &fileData, const QByteArray &decryptedData) const;
 
 protected:
-    signals:
-    void return_to_main() ;
+signals:
+    void return_to_main();
 
 private slots:
     void BrowseBuSource();

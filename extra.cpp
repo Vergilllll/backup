@@ -1,23 +1,21 @@
 #include "extra.h"
-#include "ui_extra.h"
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QDir>
-#include <QDateTime>
-#include <QFile>
-#include <QDataStream>
-#include <QCryptographicHash>
-#include <QDebug>
-#include <QMenu>
 #include <QCloseEvent>
-
+#include <QCryptographicHash>
+#include <QDataStream>
+#include <QDateTime>
+#include <QDebug>
+#include <QDir>
+#include <QFile>
+#include <QFileDialog>
+#include <QMenu>
+#include <QMessageBox>
+#include "ui_extra.h"
 
 const int METADATA_SIZE = 512;
 
-
-extra::extra(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::extra)
+extra::extra(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::extra)
 {
     ui->setupUi(this);
 
@@ -37,7 +35,7 @@ extra::extra(QWidget *parent) :
     connect(ui->startRealTimeButton, SIGNAL(clicked(bool)), this, SLOT(startRealTimeBackup()));
     connect(ui->stopRealTimeButton, SIGNAL(clicked(bool)), this, SLOT(stopRealTimeBackup()));
     connect(ui->return_main, SIGNAL(clicked()), this, SLOT(showMainWindow()));
-    connect(this->ui->pwd_confirm,SIGNAL(clicked(bool)),this,SLOT(SetPassWord()));
+    connect(this->ui->pwd_confirm, SIGNAL(clicked(bool)), this, SLOT(SetPassWord()));
     // 创建系统托盘图标
     createTrayIcon();
 
@@ -52,9 +50,10 @@ extra::~extra()
     delete ui;
 }
 
-void extra::createTrayIcon() {
+void extra::createTrayIcon()
+{
     trayIcon = new QSystemTrayIcon(this);
-    trayIcon->setIcon(QIcon(":/new/prefix1/icon.png"));  // 设置托盘图标的图标
+    trayIcon->setIcon(QIcon(":/new/prefix1/icon.png")); // 设置托盘图标的图标
     trayIcon->show();
 
     restoreAction = new QAction(tr("返回界面"), this);
@@ -69,8 +68,8 @@ void extra::createTrayIcon() {
     trayIcon->setContextMenu(trayIconMenu);
 }
 
-
-void extra::BrowseSource(){
+void extra::BrowseSource()
+{
     QFileDialog dialog(this, tr("选择备份数据"), ui->sourcePath->text(), tr("所有文件 (*)"));
     dialog.setFileMode(QFileDialog::ExistingFiles);
     if (dialog.exec()) {
@@ -83,21 +82,28 @@ void extra::BrowseSource(){
     };
 }
 
-void extra::BrowseDirectory() {
+void extra::BrowseDirectory()
+{
     QString path = QFileDialog::getExistingDirectory(this, tr("选择目录"), ui->sourcePath->text());
     if (!path.isEmpty()) {
         ui->sourcePath->setText(path);
     }
 }
 
-void extra::BrowseBackupPath() {
-    QString path = QFileDialog::getExistingDirectory(this, tr("选择备份路径"), ui->backupPath->text());
+
+
+void extra::BrowseBackupPath()
+{
+    QString path = QFileDialog::getExistingDirectory(this,
+                                                     tr("选择备份路径"),
+                                                     ui->backupPath->text());
     if (!path.isEmpty()) {
         ui->backupPath->setText(path);
     }
 }
 
-void extra::ConfirmScheduledBackup() {
+void extra::ConfirmScheduledBackup()
+{
     QString sourcePath = ui->sourcePath->text();
     QString backupPath = ui->backupPath->text();
 
@@ -118,7 +124,8 @@ void extra::ConfirmScheduledBackup() {
     ui->backupPath->clear();
 }
 
-void extra::ConfirmRealTimeBackup() {
+void extra::ConfirmRealTimeBackup()
+{
     QString sourcePath = ui->sourcePath->text();
     QString backupPath = ui->backupPath->text();
 
@@ -146,7 +153,8 @@ void extra::ConfirmRealTimeBackup() {
     ui->backupPath->clear();
 }
 
-void extra::startScheduledBackup() {
+void extra::startScheduledBackup()
+{
     if (!scheduledBackupRunning) {
         int interval = ui->intervalSpinBox->value();
         if (interval <= 0) {
@@ -166,7 +174,8 @@ void extra::startScheduledBackup() {
     }
 }
 
-void extra::stopScheduledBackup() {
+void extra::stopScheduledBackup()
+{
     if (scheduledBackupRunning) {
         timer->stop();
         scheduledBackupRunning = false;
@@ -174,7 +183,8 @@ void extra::stopScheduledBackup() {
     }
 }
 
-void extra::startRealTimeBackup() {
+void extra::startRealTimeBackup()
+{
     if (!realTimeBackupRunning) {
         if (this->password.isEmpty()) {
             QMessageBox::warning(this, tr("警告"), tr("请先设置密码！"));
@@ -186,14 +196,16 @@ void extra::startRealTimeBackup() {
     }
 }
 
-void extra::stopRealTimeBackup() {
+void extra::stopRealTimeBackup()
+{
     if (realTimeBackupRunning) {
         realTimeBackupRunning = false;
         QMessageBox::information(this, tr("提示"), tr("实时备份已停止！"));
     }
 }
 
-void extra::performBackup(bool isScheduled) {
+void extra::performBackup(bool isScheduled)
+{
     QVector<BackupEntry> &entries = isScheduled ? scheduledBackupEntries : realTimeBackupEntries;
     QString successMessage = isScheduled ? tr("定时备份成功！") : tr("实时备份成功！");
     QString failureMessage = isScheduled ? tr("定时备份失败！") : tr("实时备份失败！");
@@ -205,9 +217,9 @@ void extra::performBackup(bool isScheduled) {
         }
 
         QList<QFileInfo> files;
-        if (entry.isDirectory) {  // 是目录
+        if (entry.isDirectory) { // 是目录
             collectFiles(entry.sourcePath, files);
-        } else {  // 是文件
+        } else { // 是文件
             files.append(QFileInfo(entry.sourcePath));
         }
 
@@ -221,9 +233,10 @@ void extra::performBackup(bool isScheduled) {
         QString sourceName = sourceInfo.fileName();
 
         // 生成备份文件名
-        QString outputFileName = "backup_" + sourceName + "_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".dat";
+        QString outputFileName = "backup_" + sourceName + "_"
+                                 + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss")
+                                 + ".dat";
         QString outputFilePath = entry.backupPath + "/" + outputFileName;
-
 
         if (packFiles(files, outputFilePath, entry.isDirectory)) {
             QMessageBox::information(this, tr("成功"), successMessage);
@@ -233,11 +246,13 @@ void extra::performBackup(bool isScheduled) {
     }
 }
 
-void extra::onTimeout() {
-    performBackup(true);  // 调用定时备份
+void extra::onTimeout()
+{
+    performBackup(true); // 调用定时备份
 }
 
-void extra::collectFiles(const QString &dirPath, QList<QFileInfo> &files) {
+void extra::collectFiles(const QString &dirPath, QList<QFileInfo> &files)
+{
     QDir dir(dirPath);
     QFileInfoList entries = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs);
 
@@ -250,7 +265,10 @@ void extra::collectFiles(const QString &dirPath, QList<QFileInfo> &files) {
     }
 }
 
-bool extra::packFiles(const QList<QFileInfo> &files, const QString &outputFilePath, bool isDirectoryPack) {
+bool extra::packFiles(const QList<QFileInfo> &files,
+                      const QString &outputFilePath,
+                      bool isDirectoryPack)
+{
     QFile outputFile(outputFilePath);
     if (!outputFile.open(QIODevice::WriteOnly)) {
         return false;
@@ -327,7 +345,8 @@ bool extra::packFiles(const QList<QFileInfo> &files, const QString &outputFilePa
     return true;
 }
 
-QByteArray extra::xorEncryptDecrypt(const QByteArray &data, const QByteArray &key) {
+QByteArray extra::xorEncryptDecrypt(const QByteArray &data, const QByteArray &key)
+{
     QByteArray result(data.size(), 0);
     for (int i = 0; i < data.size(); ++i) {
         result[i] = data[i] ^ key[i % key.size()];
@@ -335,7 +354,8 @@ QByteArray extra::xorEncryptDecrypt(const QByteArray &data, const QByteArray &ke
     return result;
 }
 
-void extra::SetPassWord() {
+void extra::SetPassWord()
+{
     password = ui->password->text();
     if (!this->password.isEmpty()) {
         QMessageBox::information(this, tr("提示"), tr("密码已设置成功！"));
@@ -344,71 +364,80 @@ void extra::SetPassWord() {
     }
 }
 
-
-quint64 extra::calculatePadding(quint64 fileSize) {
+quint64 extra::calculatePadding(quint64 fileSize)
+{
     return (512 - (fileSize % 512)) % 512;
 }
 
-void extra::showMainWindow() {
-    this->hide();  // 隐藏当前窗口
-    emit backToMain();  // 发送返回backup的信号
+void extra::showMainWindow()
+{
+    this->hide();      // 隐藏当前窗口
+    emit backToMain(); // 发送返回backup的信号
 }
 
-void extra::onWindowClose() {
+void extra::onWindowClose()
+{
     this->hide();
-    trayIcon->showMessage(tr("备份工具"), tr("程序已最小化到托盘"), QSystemTrayIcon::Information, 5000);
+    trayIcon->showMessage(tr("备份工具"),
+                          tr("程序已最小化到托盘"),
+                          QSystemTrayIcon::Information,
+                          5000);
 }
 
-void extra::closeEvent(QCloseEvent *event) {
+void extra::closeEvent(QCloseEvent *event)
+{
     // 创建一个消息框，询问用户是否确认关闭软件
-        QMessageBox msgBox(this);
-        msgBox.setWindowTitle(tr("确认关闭"));
-        msgBox.setText(tr("是否确认关闭软件？关闭后备份功能将停止"));
-        msgBox.setIcon(QMessageBox::Question);
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle(tr("确认关闭"));
+    msgBox.setText(tr("是否确认关闭软件？关闭后备份功能将停止"));
+    msgBox.setIcon(QMessageBox::Question);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
 
-        // 设置按钮文本
-        QPushButton *yesButton = qobject_cast<QPushButton*>(msgBox.button(QMessageBox::Yes));
-        yesButton->setText(tr("关闭"));
-        QPushButton *noButton = qobject_cast<QPushButton*>(msgBox.button(QMessageBox::No));
-        noButton->setText(tr("最小化到托盘"));
+    // 设置按钮文本
+    QPushButton *yesButton = qobject_cast<QPushButton *>(msgBox.button(QMessageBox::Yes));
+    yesButton->setText(tr("关闭"));
+    QPushButton *noButton = qobject_cast<QPushButton *>(msgBox.button(QMessageBox::No));
+    noButton->setText(tr("最小化到托盘"));
 
-        int ret = msgBox.exec();
+    int ret = msgBox.exec();
 
-        if (ret == QMessageBox::Yes) {
-            // 用户点击“关闭”，停止定时和实时备份功能，并关闭软件
-            stopScheduledBackup();
-            stopRealTimeBackup();
-            event->accept();  // 接受关闭事件
-        } else {
-            // 用户点击“最小化到托盘”，隐藏窗口而不是关闭
-            onWindowClose();
-            event->ignore();  // 忽略关闭事件
-        }
+    if (ret == QMessageBox::Yes) {
+        // 用户点击“关闭”，停止定时和实时备份功能，并关闭软件
+        stopScheduledBackup();
+        stopRealTimeBackup();
+        event->accept(); // 接受关闭事件
+    } else {
+        // 用户点击“最小化到托盘”，隐藏窗口而不是关闭
+        onWindowClose();
+        event->ignore(); // 忽略关闭事件
+    }
 }
 
-void extra::closeApplication() {
-    this->close();  // 关闭应用程序
+void extra::closeApplication()
+{
+    this->close(); // 关闭应用程序
 }
 
-void extra::onFileChanged(const QString &path) {
+void extra::onFileChanged(const QString &path)
+{
     if (realTimeBackupRunning) {
         // 找到对应的备份条目并执行备份
         for (BackupEntry &entry : realTimeBackupEntries) {
             if (entry.sourcePath == path) {
-                performBackup(false);  // 调用实时备份
+                performBackup(false); // 调用实时备份
                 break;
             }
         }
     }
 }
 
-void extra::onDirectoryChanged(const QString &path) {
+void extra::onDirectoryChanged(const QString &path)
+{
     if (realTimeBackupRunning) {
         // 找到对应的备份条目并执行备份
         for (BackupEntry &entry : realTimeBackupEntries) {
             if (entry.sourcePath == path) {
-                performBackup(false);  // 调用实时备份
+                performBackup(false); // 调用实时备份
                 break;
             }
         }

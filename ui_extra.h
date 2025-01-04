@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'extra.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.9
+** Created by: Qt User Interface Compiler version 5.15.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,10 +10,7 @@
 #define UI_EXTRA_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -50,73 +47,73 @@ public:
     void setupUi(QWidget *extra)
     {
         if (extra->objectName().isEmpty())
-            extra->setObjectName(QStringLiteral("extra"));
+            extra->setObjectName(QString::fromUtf8("extra"));
         extra->resize(481, 337);
         res_label = new QLabel(extra);
-        res_label->setObjectName(QStringLiteral("res_label"));
-        res_label->setGeometry(QRect(10, 80, 54, 12));
+        res_label->setObjectName(QString::fromUtf8("res_label"));
+        res_label->setGeometry(QRect(10, 80, 81, 21));
         path_label = new QLabel(extra);
-        path_label->setObjectName(QStringLiteral("path_label"));
-        path_label->setGeometry(QRect(10, 150, 61, 20));
+        path_label->setObjectName(QString::fromUtf8("path_label"));
+        path_label->setGeometry(QRect(7, 150, 61, 20));
         browseBackupButton = new QPushButton(extra);
-        browseBackupButton->setObjectName(QStringLiteral("browseBackupButton"));
-        browseBackupButton->setGeometry(QRect(370, 150, 80, 20));
+        browseBackupButton->setObjectName(QString::fromUtf8("browseBackupButton"));
+        browseBackupButton->setGeometry(QRect(370, 149, 80, 23));
         return_main = new QPushButton(extra);
-        return_main->setObjectName(QStringLiteral("return_main"));
-        return_main->setGeometry(QRect(0, 290, 80, 31));
+        return_main->setObjectName(QString::fromUtf8("return_main"));
+        return_main->setGeometry(QRect(10, 30, 80, 31));
         confirmScheduledButton = new QPushButton(extra);
-        confirmScheduledButton->setObjectName(QStringLiteral("confirmScheduledButton"));
-        confirmScheduledButton->setGeometry(QRect(300, 180, 81, 51));
+        confirmScheduledButton->setObjectName(QString::fromUtf8("confirmScheduledButton"));
+        confirmScheduledButton->setGeometry(QRect(330, 190, 101, 31));
         browseDirButton = new QPushButton(extra);
-        browseDirButton->setObjectName(QStringLiteral("browseDirButton"));
-        browseDirButton->setGeometry(QRect(370, 110, 80, 20));
+        browseDirButton->setObjectName(QString::fromUtf8("browseDirButton"));
+        browseDirButton->setGeometry(QRect(370, 110, 80, 23));
         title = new QLabel(extra);
-        title->setObjectName(QStringLiteral("title"));
-        title->setGeometry(QRect(180, 20, 111, 20));
-        title->setStyleSheet(QStringLiteral(""));
+        title->setObjectName(QString::fromUtf8("title"));
+        title->setGeometry(QRect(160, 30, 191, 31));
+        title->setStyleSheet(QString::fromUtf8(""));
         label = new QLabel(extra);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(0, 20, 481, 337));
-        label->setStyleSheet(QStringLiteral("border-image: url(:/new/prefix1/1.png);"));
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(0, 0, 481, 337));
+        label->setStyleSheet(QString::fromUtf8("border-image: url(:/new/prefix1/1.png);"));
         backupPath = new QLineEdit(extra);
-        backupPath->setObjectName(QStringLiteral("backupPath"));
+        backupPath->setObjectName(QString::fromUtf8("backupPath"));
         backupPath->setGeometry(QRect(70, 150, 291, 20));
         timer_label = new QLabel(extra);
-        timer_label->setObjectName(QStringLiteral("timer_label"));
-        timer_label->setGeometry(QRect(10, 250, 81, 20));
+        timer_label->setObjectName(QString::fromUtf8("timer_label"));
+        timer_label->setGeometry(QRect(10, 250, 101, 20));
         browseButton = new QPushButton(extra);
-        browseButton->setObjectName(QStringLiteral("browseButton"));
-        browseButton->setGeometry(QRect(370, 80, 80, 20));
+        browseButton->setObjectName(QString::fromUtf8("browseButton"));
+        browseButton->setGeometry(QRect(370, 79, 80, 23));
         startScheduledButton = new QPushButton(extra);
-        startScheduledButton->setObjectName(QStringLiteral("startScheduledButton"));
-        startScheduledButton->setGeometry(QRect(100, 290, 81, 41));
+        startScheduledButton->setObjectName(QString::fromUtf8("startScheduledButton"));
+        startScheduledButton->setGeometry(QRect(20, 290, 111, 41));
         sourcePath = new QLineEdit(extra);
-        sourcePath->setObjectName(QStringLiteral("sourcePath"));
+        sourcePath->setObjectName(QString::fromUtf8("sourcePath"));
         sourcePath->setGeometry(QRect(70, 80, 291, 21));
         stopScheduledButton = new QPushButton(extra);
-        stopScheduledButton->setObjectName(QStringLiteral("stopScheduledButton"));
-        stopScheduledButton->setGeometry(QRect(200, 290, 81, 41));
+        stopScheduledButton->setObjectName(QString::fromUtf8("stopScheduledButton"));
+        stopScheduledButton->setGeometry(QRect(140, 290, 101, 41));
         intervalSpinBox = new QSpinBox(extra);
-        intervalSpinBox->setObjectName(QStringLiteral("intervalSpinBox"));
-        intervalSpinBox->setGeometry(QRect(100, 250, 101, 22));
+        intervalSpinBox->setObjectName(QString::fromUtf8("intervalSpinBox"));
+        intervalSpinBox->setGeometry(QRect(110, 249, 101, 22));
         pwd_label = new QLabel(extra);
-        pwd_label->setObjectName(QStringLiteral("pwd_label"));
-        pwd_label->setGeometry(QRect(10, 210, 54, 12));
+        pwd_label->setObjectName(QString::fromUtf8("pwd_label"));
+        pwd_label->setGeometry(QRect(10, 209, 81, 21));
         password = new QLineEdit(extra);
-        password->setObjectName(QStringLiteral("password"));
+        password->setObjectName(QString::fromUtf8("password"));
         password->setGeometry(QRect(80, 210, 121, 20));
         pwd_confirm = new QPushButton(extra);
-        pwd_confirm->setObjectName(QStringLiteral("pwd_confirm"));
-        pwd_confirm->setGeometry(QRect(210, 210, 71, 20));
+        pwd_confirm->setObjectName(QString::fromUtf8("pwd_confirm"));
+        pwd_confirm->setGeometry(QRect(210, 207, 71, 26));
         confirmRealTimeButton = new QPushButton(extra);
-        confirmRealTimeButton->setObjectName(QStringLiteral("confirmRealTimeButton"));
-        confirmRealTimeButton->setGeometry(QRect(390, 180, 81, 51));
+        confirmRealTimeButton->setObjectName(QString::fromUtf8("confirmRealTimeButton"));
+        confirmRealTimeButton->setGeometry(QRect(330, 230, 101, 31));
         startRealTimeButton = new QPushButton(extra);
-        startRealTimeButton->setObjectName(QStringLiteral("startRealTimeButton"));
-        startRealTimeButton->setGeometry(QRect(300, 290, 81, 41));
+        startRealTimeButton->setObjectName(QString::fromUtf8("startRealTimeButton"));
+        startRealTimeButton->setGeometry(QRect(250, 290, 111, 41));
         stopRealTimeButton = new QPushButton(extra);
-        stopRealTimeButton->setObjectName(QStringLiteral("stopRealTimeButton"));
-        stopRealTimeButton->setGeometry(QRect(390, 290, 81, 41));
+        stopRealTimeButton->setObjectName(QString::fromUtf8("stopRealTimeButton"));
+        stopRealTimeButton->setGeometry(QRect(370, 290, 101, 41));
         label->raise();
         res_label->raise();
         path_label->raise();
@@ -146,24 +143,24 @@ public:
 
     void retranslateUi(QWidget *extra)
     {
-        extra->setWindowTitle(QApplication::translate("extra", "Form", Q_NULLPTR));
-        res_label->setText(QApplication::translate("extra", "\346\272\220\350\267\257\345\276\204", Q_NULLPTR));
-        path_label->setText(QApplication::translate("extra", "\345\244\207\344\273\275\350\267\257\345\276\204", Q_NULLPTR));
-        browseBackupButton->setText(QApplication::translate("extra", "\346\265\217\350\247\210", Q_NULLPTR));
-        return_main->setText(QApplication::translate("extra", "\350\277\224\345\233\236\344\270\273\347\225\214\351\235\242", Q_NULLPTR));
-        confirmScheduledButton->setText(QApplication::translate("extra", "\350\256\276\347\275\256\345\256\232\346\227\266\350\267\257\345\276\204", Q_NULLPTR));
-        browseDirButton->setText(QApplication::translate("extra", "\346\265\217\350\247\210\347\233\256\345\275\225", Q_NULLPTR));
-        title->setText(QApplication::translate("extra", "\345\256\232\346\227\266/\345\256\236\346\227\266\345\244\207\344\273\275\345\212\237\350\203\275", Q_NULLPTR));
+        extra->setWindowTitle(QCoreApplication::translate("extra", "\345\256\232\346\227\266/\345\256\236\346\227\266\345\244\207\344\273\275", nullptr));
+        res_label->setText(QCoreApplication::translate("extra", "<html><head/><body><p><span style=\" color:#ffffff;\">\346\272\220\350\267\257\345\276\204</span></p></body></html>", nullptr));
+        path_label->setText(QCoreApplication::translate("extra", "<html><head/><body><p><span style=\" color:#ffffff;\">\345\244\207\344\273\275\350\267\257\345\276\204</span></p></body></html>", nullptr));
+        browseBackupButton->setText(QCoreApplication::translate("extra", "\346\265\217\350\247\210", nullptr));
+        return_main->setText(QCoreApplication::translate("extra", "\350\277\224\345\233\236\344\270\273\347\225\214\351\235\242", nullptr));
+        confirmScheduledButton->setText(QCoreApplication::translate("extra", "\350\256\276\347\275\256\345\256\232\346\227\266\350\267\257\345\276\204", nullptr));
+        browseDirButton->setText(QCoreApplication::translate("extra", "\346\265\217\350\247\210\347\233\256\345\275\225", nullptr));
+        title->setText(QCoreApplication::translate("extra", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:700; color:#ffffff;\">\345\256\232\346\227\266/\345\256\236\346\227\266\345\244\207\344\273\275\345\212\237\350\203\275</span></p></body></html>", nullptr));
         label->setText(QString());
-        timer_label->setText(QApplication::translate("extra", "\345\256\232\346\227\266\345\244\207\344\273\275\351\227\264\351\232\224", Q_NULLPTR));
-        browseButton->setText(QApplication::translate("extra", "\346\265\217\350\247\210\346\226\207\344\273\266", Q_NULLPTR));
-        startScheduledButton->setText(QApplication::translate("extra", "\350\277\233\350\241\214\345\256\232\346\227\266\345\244\207\344\273\275", Q_NULLPTR));
-        stopScheduledButton->setText(QApplication::translate("extra", "\345\201\234\346\255\242\345\256\232\346\227\266\345\244\207\344\273\275", Q_NULLPTR));
-        pwd_label->setText(QApplication::translate("extra", "\345\212\240\345\257\206\345\257\206\347\240\201", Q_NULLPTR));
-        pwd_confirm->setText(QApplication::translate("extra", "\347\241\256\350\256\244\345\257\206\347\240\201", Q_NULLPTR));
-        confirmRealTimeButton->setText(QApplication::translate("extra", "\350\256\276\347\275\256\345\256\236\346\227\266\350\267\257\345\276\204", Q_NULLPTR));
-        startRealTimeButton->setText(QApplication::translate("extra", "\350\277\233\350\241\214\345\256\236\346\227\266\345\244\207\344\273\275", Q_NULLPTR));
-        stopRealTimeButton->setText(QApplication::translate("extra", "\345\201\234\346\255\242\345\256\236\346\227\266\345\244\207\344\273\275", Q_NULLPTR));
+        timer_label->setText(QCoreApplication::translate("extra", "<html><head/><body><p><span style=\" color:#ffffff;\">\345\256\232\346\227\266\345\244\207\344\273\275\351\227\264\351\232\224</span></p></body></html>", nullptr));
+        browseButton->setText(QCoreApplication::translate("extra", "\346\265\217\350\247\210\346\226\207\344\273\266", nullptr));
+        startScheduledButton->setText(QCoreApplication::translate("extra", "\350\277\233\350\241\214\345\256\232\346\227\266\345\244\207\344\273\275", nullptr));
+        stopScheduledButton->setText(QCoreApplication::translate("extra", "\345\201\234\346\255\242\345\256\232\346\227\266\345\244\207\344\273\275", nullptr));
+        pwd_label->setText(QCoreApplication::translate("extra", "<html><head/><body><p><span style=\" color:#ffffff;\">\345\212\240\345\257\206\345\257\206\347\240\201</span></p></body></html>", nullptr));
+        pwd_confirm->setText(QCoreApplication::translate("extra", "\347\241\256\350\256\244\345\257\206\347\240\201", nullptr));
+        confirmRealTimeButton->setText(QCoreApplication::translate("extra", "\350\256\276\347\275\256\345\256\236\346\227\266\350\267\257\345\276\204", nullptr));
+        startRealTimeButton->setText(QCoreApplication::translate("extra", "\350\277\233\350\241\214\345\256\236\346\227\266\345\244\207\344\273\275", nullptr));
+        stopRealTimeButton->setText(QCoreApplication::translate("extra", "\345\201\234\346\255\242\345\256\236\346\227\266\345\244\207\344\273\275", nullptr));
     } // retranslateUi
 
 };
