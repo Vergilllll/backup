@@ -37,6 +37,7 @@ public:
     QLineEdit *password;
     QPushButton *extra_button;
     QPushButton *fileFilter_button;
+    QLabel *label_2;
 
     void setupUi(QWidget *backup)
     {
@@ -92,7 +93,10 @@ public:
         extra_button->setGeometry(QRect(270, 250, 101, 51));
         fileFilter_button = new QPushButton(backup);
         fileFilter_button->setObjectName(QString::fromUtf8("fileFilter_button"));
-        fileFilter_button->setGeometry(QRect(220, 110, 91, 23));
+        fileFilter_button->setGeometry(QRect(230, 110, 91, 23));
+        label_2 = new QLabel(backup);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(320, 111, 121, 21));
         label->raise();
         res_button->raise();
         origin_res->raise();
@@ -109,6 +113,7 @@ public:
         password->raise();
         extra_button->raise();
         fileFilter_button->raise();
+        label_2->raise();
 
         retranslateUi(backup);
 
@@ -131,6 +136,7 @@ public:
         password_label->setText(QCoreApplication::translate("backup", "\345\212\240\345\257\206\345\257\206\347\240\201", nullptr));
         extra_button->setText(QCoreApplication::translate("backup", "\346\233\264\345\244\232\345\244\207\344\273\275\350\256\276\347\275\256", nullptr));
         fileFilter_button->setText(QCoreApplication::translate("backup", "\351\253\230\347\272\247\347\255\233\351\200\211", nullptr));
+        label_2->setText(QCoreApplication::translate("backup", "<html><head/><body><p><span style=\" font-weight:700; color:#ffeef8;\">\357\274\210\345\205\210\351\200\211\346\213\251\347\233\256\345\275\225\357\274\211</span></p></body></html>", nullptr));
     } // retranslateUi
 
 };

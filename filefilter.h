@@ -19,6 +19,7 @@ protected:
 signals:
     void return_to_backup();
     void sendfilterdPath(QString);
+    void return_to_extra();
 
 private:
     Ui::Filefilter *ui;

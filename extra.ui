@@ -81,7 +81,7 @@
   <widget class="QPushButton" name="browseDirButton">
    <property name="geometry">
     <rect>
-     <x>370</x>
+     <x>70</x>
      <y>110</y>
      <width>80</width>
      <height>23</height>
@@ -280,6 +280,32 @@
     <string>停止实时备份</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="fileFilter_button">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>110</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>高级筛选</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>111</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ffeef8;&quot;&gt;（先选择目录）&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
   <zorder>label</zorder>
   <zorder>res_label</zorder>
   <zorder>path_label</zorder>
@@ -301,6 +327,8 @@
   <zorder>confirmRealTimeButton</zorder>
   <zorder>startRealTimeButton</zorder>
   <zorder>stopRealTimeButton</zorder>
+  <zorder>fileFilter_button</zorder>
+  <zorder>label_2</zorder>
  </widget>
  <resources/>
  <connections/>

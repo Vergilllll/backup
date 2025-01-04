@@ -10,6 +10,7 @@
 #include <QTimer>
 #include <QVector>
 #include <QWidget>
+#include "filefilter.h"
 
 namespace Ui {
 class extra;
@@ -43,12 +44,17 @@ private slots:
     void SetPassWord();
     void onFileChanged(const QString &path);
     void onDirectoryChanged(const QString &path);
+    void filter_click();
+    void changePath(QString);
+    void showExtra();
 
 signals:
     void backToMain();
+    void sendPath(QString);
 
 private:
     Ui::extra *ui;
+    Filefilter *filter;
     struct BackupEntry
     {
         QString sourcePath; // 源路径

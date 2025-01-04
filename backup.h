@@ -12,36 +12,6 @@ namespace Ui {
 class backup;
 }
 
-// 自定义哈希函数，用于 QChar 在 std::unordered_map 中的使用
-struct QCharHash {
-    std::size_t operator()(const QChar& key) const {
-        return std::hash<ushort>()(key.unicode());
-    }
-};
-
-// 哈夫曼树节点结构
-struct HuffmanNode {
-    QChar character;
-    int frequency;
-    std::shared_ptr<HuffmanNode> left;
-    std::shared_ptr<HuffmanNode> right;
-
-    HuffmanNode(QChar ch, int freq)
-        : character(ch), frequency(freq), left(nullptr), right(nullptr) {}
-
-    // 判断是否为叶子节点
-    bool isLeaf() const {
-        return !left && !right;
-    }
-};
-
-// 比较器，用于优先队列（小顶堆）
-struct CompareNode {
-    bool operator()(const std::shared_ptr<HuffmanNode>& a, const std::shared_ptr<HuffmanNode>& b) const {
-        return a->frequency > b->frequency;
-    }
-};
-
 class backup : public QWidget
 {
     Q_OBJECT

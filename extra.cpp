@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include "ui_extra.h"
 
+
 const int METADATA_SIZE = 512;
 
 extra::extra(QWidget *parent)
@@ -18,6 +19,9 @@ extra::extra(QWidget *parent)
     , ui(new Ui::extra)
 {
     ui->setupUi(this);
+
+    filter = new Filefilter();
+    filter->hide();
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
@@ -36,6 +40,9 @@ extra::extra(QWidget *parent)
     connect(ui->stopRealTimeButton, SIGNAL(clicked(bool)), this, SLOT(stopRealTimeBackup()));
     connect(ui->return_main, SIGNAL(clicked()), this, SLOT(showMainWindow()));
     connect(this->ui->pwd_confirm, SIGNAL(clicked(bool)), this, SLOT(SetPassWord()));
+    connect(this->ui->fileFilter_button, SIGNAL(clicked(bool)), this, SLOT(filter_click()));
+    connect(filter, SIGNAL(sendfilterdPath(QString)), this, SLOT(changePath(QString)));
+    connect(filter, SIGNAL(return_to_extra()), this, SLOT(showExtra()));
     // 创建系统托盘图标
     createTrayIcon();
 
@@ -48,6 +55,14 @@ extra::extra(QWidget *parent)
 extra::~extra()
 {
     delete ui;
+}
+
+void extra::changePath(QString paths){
+    ui->sourcePath->setText(paths);
+}
+
+void extra::showExtra(){
+    this->show();
 }
 
 void extra::createTrayIcon()
@@ -442,4 +457,16 @@ void extra::onDirectoryChanged(const QString &path)
             }
         }
     }
+}
+
+void extra::filter_click()
+{
+    if (!QDir(ui->sourcePath->text()).exists()||ui->sourcePath->text().isEmpty()) {
+        QMessageBox::warning(this, "路径错误", "请选择正确的目录！");
+        return;
+    }
+    connect(this, SIGNAL(sendPath(QString)), filter, SLOT(receivePath(QString)));
+    emit sendPath(ui->sourcePath->text());
+    this->hide();
+    filter->show();
 }

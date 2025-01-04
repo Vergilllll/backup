@@ -43,6 +43,8 @@ public:
     QPushButton *confirmRealTimeButton;
     QPushButton *startRealTimeButton;
     QPushButton *stopRealTimeButton;
+    QPushButton *fileFilter_button;
+    QLabel *label_2;
 
     void setupUi(QWidget *extra)
     {
@@ -66,7 +68,7 @@ public:
         confirmScheduledButton->setGeometry(QRect(330, 190, 101, 31));
         browseDirButton = new QPushButton(extra);
         browseDirButton->setObjectName(QString::fromUtf8("browseDirButton"));
-        browseDirButton->setGeometry(QRect(370, 110, 80, 23));
+        browseDirButton->setGeometry(QRect(70, 110, 80, 23));
         title = new QLabel(extra);
         title->setObjectName(QString::fromUtf8("title"));
         title->setGeometry(QRect(160, 30, 191, 31));
@@ -114,6 +116,12 @@ public:
         stopRealTimeButton = new QPushButton(extra);
         stopRealTimeButton->setObjectName(QString::fromUtf8("stopRealTimeButton"));
         stopRealTimeButton->setGeometry(QRect(370, 290, 101, 41));
+        fileFilter_button = new QPushButton(extra);
+        fileFilter_button->setObjectName(QString::fromUtf8("fileFilter_button"));
+        fileFilter_button->setGeometry(QRect(210, 110, 80, 23));
+        label_2 = new QLabel(extra);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(290, 111, 121, 21));
         label->raise();
         res_label->raise();
         path_label->raise();
@@ -135,6 +143,8 @@ public:
         confirmRealTimeButton->raise();
         startRealTimeButton->raise();
         stopRealTimeButton->raise();
+        fileFilter_button->raise();
+        label_2->raise();
 
         retranslateUi(extra);
 
@@ -161,6 +171,8 @@ public:
         confirmRealTimeButton->setText(QCoreApplication::translate("extra", "\350\256\276\347\275\256\345\256\236\346\227\266\350\267\257\345\276\204", nullptr));
         startRealTimeButton->setText(QCoreApplication::translate("extra", "\350\277\233\350\241\214\345\256\236\346\227\266\345\244\207\344\273\275", nullptr));
         stopRealTimeButton->setText(QCoreApplication::translate("extra", "\345\201\234\346\255\242\345\256\236\346\227\266\345\244\207\344\273\275", nullptr));
+        fileFilter_button->setText(QCoreApplication::translate("extra", "\351\253\230\347\272\247\347\255\233\351\200\211", nullptr));
+        label_2->setText(QCoreApplication::translate("extra", "<html><head/><body><p><span style=\" font-weight:700; color:#ffeef8;\">\357\274\210\345\205\210\351\200\211\346\213\251\347\233\256\345\275\225\357\274\211</span></p></body></html>", nullptr));
     } // retranslateUi
 
 };

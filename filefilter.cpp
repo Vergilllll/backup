@@ -2,7 +2,10 @@
 #include "qdir.h"
 #include "ui_filefilter.h"
 #include <QMessageBox>
-#include "QDateTime"
+#include <QDateTime>
+#include <QListWidget>
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
 
 Filefilter::Filefilter(QWidget *parent)
     : QDialog(parent)
@@ -14,10 +17,12 @@ Filefilter::Filefilter(QWidget *parent)
     ui->pathTextBox->setPlaceholderText("请输入目录路径，例如：C:/example/directory");
     ui->typesTextBox->setPlaceholderText("文件类型，例如：txt,docx,pdf");
     ui->namesTextBox->setPlaceholderText("文件名关键字，例如：example;test;sample");
-    ui->startTimeTextBox->setPlaceholderText("开始时间，例如：2023-01-01 00:00:00");
-    ui->endTimeTextBox->setPlaceholderText("结束时间，例如：2023-12-31 23:59:59");
     ui->minSizeTextBox->setPlaceholderText("0");
     ui->maxSizeTextBox->setPlaceholderText("100");
+
+    // 设置 QDateTimeEdit 的默认值
+    ui->startTimeEdit->setDateTime(QDateTime::currentDateTime().addMonths(-1)); // 默认从一个月前
+    ui->endTimeEdit->setDateTime(QDateTime::currentDateTime());                 // 默认到当前时间
 
     connect(this->ui->filterButton, SIGNAL(clicked(bool)), this, SLOT(filterFilesAndShowResult()));
     connect(this->ui->returnButton, SIGNAL(clicked(bool)), this, SLOT(return_click()));
@@ -28,11 +33,13 @@ Filefilter::~Filefilter()
     delete ui;
 }
 
-void Filefilter::receivePath(QString dirPath){
+void Filefilter::receivePath(QString dirPath)
+{
     this->ui->pathTextBox->setText(dirPath);
 }
 
-QStringList Filefilter::getFilePathsInDirectory(const QString& directoryPath) {
+QStringList Filefilter::getFilePathsInDirectory(const QString& directoryPath)
+{
     QStringList filePaths;
     QDir directory(directoryPath);
     QStringList fileNames = directory.entryList(QDir::Files);
@@ -46,7 +53,8 @@ QStringList Filefilter::getFilePathsInDirectory(const QString& directoryPath) {
 QStringList Filefilter::filterFiles(const QStringList& filePaths,
                                     const QStringList& selectedTypes, const QStringList& selectedNames,
                                     const QDateTime& startTime, const QDateTime& endTime,
-                                    qint64 minSize, qint64 maxSize) {
+                                    qint64 minSize, qint64 maxSize)
+{
     QStringList filteredFiles;
     for (const QString& filePath : filePaths) {
         QFileInfo fileInfo(filePath);
@@ -80,6 +88,7 @@ QStringList Filefilter::filterFiles(const QStringList& filePaths,
                 continue;
             }
         }
+
         // 时间筛选
         if (startTime.isValid() && endTime.isValid()) {
             QDateTime lastModified = fileInfo.lastModified();
@@ -87,6 +96,7 @@ QStringList Filefilter::filterFiles(const QStringList& filePaths,
                 continue;
             }
         }
+
         // 尺寸筛选（按 MB 计算）
         qint64 fileSizeMB = fileInfo.size() / (1024 * 1024); // 将字节转换为 MB
         if (fileSizeMB < minSize || fileSizeMB > maxSize) {
@@ -97,7 +107,8 @@ QStringList Filefilter::filterFiles(const QStringList& filePaths,
     return filteredFiles;
 }
 
-void Filefilter::filterFilesAndShowResult() {
+void Filefilter::filterFilesAndShowResult()
+{
     QString selectedPathFromUi = ui->pathTextBox->text().trimmed();
     if (!QDir(selectedPathFromUi).exists()) {
         QMessageBox::warning(this, "路径错误", "请选择正确的目录！");
@@ -122,25 +133,9 @@ void Filefilter::filterFilesAndShowResult() {
         }
     }
 
-    QString startTimeStrFromUi = ui->startTimeTextBox->text().trimmed();
-    QDateTime startTime;
-    if (!startTimeStrFromUi.isEmpty()) {
-        startTime = QDateTime::fromString(startTimeStrFromUi, "yyyy-MM-dd hh:mm:ss");
-        if (!startTime.isValid()) {
-            QMessageBox::warning(this, "时间格式错误", "开始时间格式输入有误，请重新输入！");
-            return;
-        }
-    }
-
-    QString endTimeStrFromUi = ui->endTimeTextBox->text().trimmed();
-    QDateTime endTime;
-    if (!endTimeStrFromUi.isEmpty()) {
-        endTime = QDateTime::fromString(endTimeStrFromUi, "yyyy-MM-dd hh:mm:ss");
-        if (!endTime.isValid()) {
-            QMessageBox::warning(this, "时间格式错误", "结束时间格式输入有误，请重新输入！");
-            return;
-        }
-    }
+    // 使用 QDateTimeEdit 获取起始时间
+    QDateTime startTime = ui->startTimeEdit->dateTime();
+    QDateTime endTime = ui->endTimeEdit->dateTime();
 
     qint64 minSize = 0;
     QString minSizeStrFromUi = ui->minSizeTextBox->text().trimmed();
@@ -167,31 +162,54 @@ void Filefilter::filterFilesAndShowResult() {
     QStringList filteredFiles = filterFiles(filePaths, selectedTypes, selectedNames,
                                             startTime, endTime, minSize, maxSize);
 
-    // 显示筛选结果
-    QString resultMsg = QString("筛选后共找到 %1 个文件，部分文件如下：\n").arg(filteredFiles.size());
-    for (int i = 0; i < qMin(5, filteredFiles.size()); i++) {  // 显示前5个文件名，可调整
-        resultMsg += filteredFiles.at(i) + "\n";
+    // 如果没有找到文件，直接返回
+    if (filteredFiles.isEmpty()) {
+        QMessageBox::information(this, "筛选结果", "没有符合条件的文件。");
+        return;
     }
-    int buttonClicked = QMessageBox::question(this, "筛选结果", resultMsg, QMessageBox::Ok | QMessageBox::Cancel);
-    if (buttonClicked == QMessageBox::Ok) {
-        this->ui->pathTextBox->setText(filteredFiles.join(";"));
-        emit sendfilterdPath(ui->pathTextBox->text());
-        return_click();
+
+    // 创建选择对话框
+    QDialog dialog(this);
+    dialog.setWindowTitle("选择文件");
+
+    QVBoxLayout layout(&dialog);
+    QListWidget fileListWidget;
+    fileListWidget.setSelectionMode(QAbstractItemView::MultiSelection);
+
+    for (const QString& file : filteredFiles) {
+        QListWidgetItem* item = new QListWidgetItem(file, &fileListWidget);
+        item->setCheckState(Qt::Unchecked);
     }
-}
+    layout.addWidget(&fileListWidget);
 
-void Filefilter::return_click() {
-    this->hide();
-    emit return_to_backup();
-}
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
+    layout.addWidget(&buttonBox);
 
-void Filefilter::clearAllText()
-{
-    // 遍历当前窗口的所有子控件
-    foreach (QObject *child, this->children()) {
-        // 如果是 QLineEdit
-        if (QLineEdit *lineEdit = qobject_cast<QLineEdit *>(child)) {
-            lineEdit->clear();
+    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        QStringList selectedFiles;
+        for (int i = 0; i < fileListWidget.count(); ++i) {
+            QListWidgetItem* item = fileListWidget.item(i);
+            if (item->checkState() == Qt::Checked) {
+                selectedFiles.append(item->text());
+            }
+        }
+
+        if (selectedFiles.isEmpty()) {
+            QMessageBox::warning(this, "未选择文件", "未选择任何文件。");
+        } else {
+            ui->pathTextBox->setText(selectedFiles.join(";"));
+            emit sendfilterdPath(ui->pathTextBox->text());
+            return_click();
         }
     }
+}
+
+void Filefilter::return_click()
+{
+    this->hide();
+    emit return_to_backup();
+    emit return_to_extra();
 }

@@ -268,6 +268,8 @@ debug/moc_backup.cpp: backup.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVector \
 		filefilter.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QProgressDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qprogressdialog.h \
 		debug/moc_predefs.h \
 		../../qt5.15/5.15.0/mingw81_32/bin/moc.exe
 	D:\qt5.15\5.15.0\mingw81_32\bin\moc.exe $(DEFINES) --include D:/qtproject/gwjbackup/debug/moc_predefs.h -ID:/qt5.15/5.15.0/mingw81_32/mkspecs/win32-g++ -ID:/qtproject/gwjbackup -ID:/qt5.15/5.15.0/mingw81_32/include -ID:/qt5.15/5.15.0/mingw81_32/include/QtWidgets -ID:/qt5.15/5.15.0/mingw81_32/include/QtGui -ID:/qt5.15/5.15.0/mingw81_32/include/QtANGLE -ID:/qt5.15/5.15.0/mingw81_32/include/QtCore -ID:/QT/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/QT/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward backup.h -o debug\moc_backup.cpp
@@ -616,22 +618,10 @@ debug/moc_restore.cpp: restore.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QMessageBox \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qmessagebox.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QWidget \
-		backup.h \
-		extra.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QFileInfo \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QFileSystemWatcher \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qfilesystemwatcher.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QList \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QPair \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QSystemTrayIcon \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qsystemtrayicon.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qicon.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QTimer \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qtimer.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qbasictimer.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVector \
-		filefilter.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QTemporaryFile \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qtemporaryfile.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QProgressDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qprogressdialog.h \
 		debug/moc_predefs.h \
 		../../qt5.15/5.15.0/mingw81_32/bin/moc.exe
 	D:\qt5.15\5.15.0\mingw81_32\bin\moc.exe $(DEFINES) --include D:/qtproject/gwjbackup/debug/moc_predefs.h -ID:/qt5.15/5.15.0/mingw81_32/mkspecs/win32-g++ -ID:/qtproject/gwjbackup -ID:/qt5.15/5.15.0/mingw81_32/include -ID:/qt5.15/5.15.0/mingw81_32/include/QtWidgets -ID:/qt5.15/5.15.0/mingw81_32/include/QtGui -ID:/qt5.15/5.15.0/mingw81_32/include/QtANGLE -ID:/qt5.15/5.15.0/mingw81_32/include/QtCore -ID:/QT/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/QT/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward restore.h -o debug\moc_restore.cpp
@@ -766,7 +756,11 @@ debug/moc_widget.cpp: widget.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVector \
 		filefilter.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QProgressDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qprogressdialog.h \
 		restore.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QTemporaryFile \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qtemporaryfile.h \
 		debug/moc_predefs.h \
 		../../qt5.15/5.15.0/mingw81_32/bin/moc.exe
 	D:\qt5.15\5.15.0\mingw81_32\bin\moc.exe $(DEFINES) --include D:/qtproject/gwjbackup/debug/moc_predefs.h -ID:/qt5.15/5.15.0/mingw81_32/mkspecs/win32-g++ -ID:/qtproject/gwjbackup -ID:/qt5.15/5.15.0/mingw81_32/include -ID:/qt5.15/5.15.0/mingw81_32/include/QtWidgets -ID:/qt5.15/5.15.0/mingw81_32/include/QtGui -ID:/qt5.15/5.15.0/mingw81_32/include/QtANGLE -ID:/qt5.15/5.15.0/mingw81_32/include/QtCore -ID:/QT/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/QT/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/QT/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward widget.h -o debug\moc_widget.cpp
@@ -936,9 +930,13 @@ debug/backup.o: backup.cpp backup.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVector \
 		filefilter.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QProgressDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qprogressdialog.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QCryptographicHash \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qcryptographichash.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QDebug \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QDateTime \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qdatetime.h \
 		ui_backup.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVariant \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QApplication \
@@ -1100,7 +1098,6 @@ debug/extra.o: extra.cpp extra.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qactiongroup.h \
 		ui_extra.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVariant \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QAction \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QApplication \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qapplication.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qcoreapplication.h \
@@ -1108,28 +1105,9 @@ debug/extra.o: extra.cpp extra.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qdesktopwidget.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qguiapplication.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qinputmethod.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QButtonGroup \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qbuttongroup.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QHeaderView \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qheaderview.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractitemview.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractscrollarea.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qframe.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qabstractitemmodel.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qitemselectionmodel.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractitemdelegate.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qstyleoption.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractspinbox.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qvalidator.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qregularexpression.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qslider.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractslider.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qstyle.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qtabbar.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qtabwidget.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qrubberband.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QLabel \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qlabel.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qframe.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QLineEdit \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qlineedit.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qtextcursor.h \
@@ -1140,7 +1118,10 @@ debug/extra.o: extra.cpp extra.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qpushbutton.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractbutton.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QSpinBox \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qspinbox.h
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qspinbox.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractspinbox.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qvalidator.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qregularexpression.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\extra.o extra.cpp
 
 debug/filefilter.o: filefilter.cpp filefilter.h \
@@ -1281,7 +1262,28 @@ debug/filefilter.o: filefilter.cpp filefilter.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QMessageBox \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qmessagebox.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QDateTime \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qdatetime.h
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qdatetime.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QListWidget \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qlistwidget.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qlistview.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractitemview.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractscrollarea.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qabstractitemmodel.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qitemselectionmodel.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractitemdelegate.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qstyleoption.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractspinbox.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qvalidator.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qregularexpression.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qslider.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractslider.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qstyle.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qtabbar.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qtabwidget.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qrubberband.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QDialogButtonBox \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qdialogbuttonbox.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\filefilter.o filefilter.cpp
 
 debug/main.o: main.cpp widget.h \
@@ -1414,7 +1416,11 @@ debug/main.o: main.cpp widget.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVector \
 		filefilter.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QProgressDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qprogressdialog.h \
 		restore.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QTemporaryFile \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qtemporaryfile.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QApplication \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qapplication.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qcoreapplication.h \
@@ -1539,22 +1545,10 @@ debug/restore.o: restore.cpp restore.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QMessageBox \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qmessagebox.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QWidget \
-		backup.h \
-		extra.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QFileInfo \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QFileSystemWatcher \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qfilesystemwatcher.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QList \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QPair \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QSystemTrayIcon \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qsystemtrayicon.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qicon.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QTimer \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qtimer.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qbasictimer.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVector \
-		filefilter.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QTemporaryFile \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qtemporaryfile.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QProgressDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qprogressdialog.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QCryptographicHash \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qcryptographichash.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QDataStream \
@@ -1563,9 +1557,6 @@ debug/restore.o: restore.cpp restore.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QFile \
 		ui_restore.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVariant \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QAction \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qaction.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qactiongroup.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QApplication \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qapplication.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qcoreapplication.h \
@@ -1573,28 +1564,9 @@ debug/restore.o: restore.cpp restore.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qdesktopwidget.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qguiapplication.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qinputmethod.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QButtonGroup \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qbuttongroup.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QHeaderView \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qheaderview.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractitemview.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractscrollarea.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qframe.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qabstractitemmodel.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qitemselectionmodel.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractitemdelegate.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qstyleoption.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractspinbox.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qvalidator.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qregularexpression.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qslider.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractslider.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qstyle.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qtabbar.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qtabwidget.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qrubberband.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QLabel \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qlabel.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qframe.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QLineEdit \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qlineedit.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qtextcursor.h \
@@ -1603,7 +1575,8 @@ debug/restore.o: restore.cpp restore.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qtextoption.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QPushButton \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qpushbutton.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractbutton.h
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractbutton.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qicon.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\restore.o restore.cpp
 
 debug/widget.o: widget.cpp widget.h \
@@ -1736,12 +1709,13 @@ debug/widget.o: widget.cpp widget.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVector \
 		filefilter.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QProgressDialog \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qprogressdialog.h \
 		restore.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QTemporaryFile \
+		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qtemporaryfile.h \
 		ui_widget.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/QVariant \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QAction \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qaction.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qactiongroup.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QApplication \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qapplication.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qcoreapplication.h \
@@ -1749,27 +1723,9 @@ debug/widget.o: widget.cpp widget.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qdesktopwidget.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qguiapplication.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qinputmethod.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QButtonGroup \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qbuttongroup.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QHeaderView \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qheaderview.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractitemview.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractscrollarea.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qframe.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qabstractitemmodel.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qitemselectionmodel.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractitemdelegate.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qstyleoption.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractspinbox.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtGui/qvalidator.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtCore/qregularexpression.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qslider.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractslider.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qstyle.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qtabbar.h \
-		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qrubberband.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QLabel \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qlabel.h \
+		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qframe.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/QPushButton \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qpushbutton.h \
 		../../qt5.15/5.15.0/mingw81_32/include/QtWidgets/qabstractbutton.h
