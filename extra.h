@@ -10,7 +10,9 @@
 #include <QTimer>
 #include <QVector>
 #include <QWidget>
+#include <QProgressDialog>
 #include "filefilter.h"
+#include <zlib.h>
 
 namespace Ui {
 class extra;
@@ -79,8 +81,12 @@ private:
     void collectFiles(const QString &dirPath, QList<QFileInfo> &files);
     void performBackup(bool isScheduled);
     bool packFiles(const QList<QFileInfo> &files,
-                   const QString &outputFilePath,
-                   bool isDirectoryPack);
+                   const QString &outputFilePath,bool isDirectoryPack);
+    void clearAllText();
+    void compressWithZlib(const QString &inputFilePath, const QString &outputFilePath);
+    bool packFiles(const QList<QFileInfo> &files, const QStringList &relativePaths,
+                          const QString &outputFilePath, const QString &rootDirectoryName,
+                          QProgressDialog &progressDialog);
 };
 
 #endif // EXTRA_H

@@ -28,6 +28,7 @@ extra::extra(QWidget *parent)
 
     scheduledBackupRunning = false;
     realTimeBackupRunning = false;
+    ui->intervalSpinBox->setSuffix(" 分钟");
 
     connect(ui->browseButton, SIGNAL(clicked(bool)), this, SLOT(BrowseSource()));
     connect(ui->browseDirButton, SIGNAL(clicked(bool)), this, SLOT(BrowseDirectory()));
@@ -135,8 +136,6 @@ void extra::ConfirmScheduledBackup()
     scheduledBackupEntries.append(entry);
 
     QMessageBox::information(this, tr("提示"), tr("定时备份已添加！"));
-    ui->sourcePath->clear();
-    ui->backupPath->clear();
 }
 
 void extra::ConfirmRealTimeBackup()
@@ -164,8 +163,6 @@ void extra::ConfirmRealTimeBackup()
     }
 
     QMessageBox::information(this, tr("提示"), tr("实时备份已添加！"));
-    ui->sourcePath->clear();
-    ui->backupPath->clear();
 }
 
 void extra::startScheduledBackup()
@@ -231,11 +228,38 @@ void extra::performBackup(bool isScheduled)
             continue;
         }
 
+        // 支持以 ';' 拼接的多个源路径
+        QStringList sourcePaths = entry.sourcePath.split(";", Qt::SkipEmptyParts);
+        if (sourcePaths.isEmpty()) {
+            QMessageBox::warning(this, tr("警告"), tr("没有找到需要备份的路径。"));
+            continue;
+        }
+
         QList<QFileInfo> files;
-        if (entry.isDirectory) { // 是目录
-            collectFiles(entry.sourcePath, files);
-        } else { // 是文件
-            files.append(QFileInfo(entry.sourcePath));
+        QStringList relativePaths; // 用于存储相对路径信息
+        QString baseDirectory;    // 基准目录
+        QString rootDirectoryName; // 用于存储备份的根目录名
+
+        foreach (const QString &sourcePath, sourcePaths) {
+            QFileInfo sourceInfo(sourcePath);
+
+            if (sourceInfo.isDir()) {
+                // 如果是目录，递归收集所有文件
+                if (baseDirectory.isEmpty()) {
+                    baseDirectory = sourceInfo.absolutePath(); // 设置第一个目录为基准目录
+                }
+                rootDirectoryName = sourceInfo.fileName(); // 设置根目录名
+                collectFiles(sourcePath, files);
+            } else if (sourceInfo.isFile()) {
+                // 如果是单个文件，直接加入列表
+                files.append(sourceInfo);
+                if (baseDirectory.isEmpty()) {
+                    baseDirectory = sourceInfo.absolutePath(); // 以第一个文件路径为基准目录
+                }
+            } else {
+                QMessageBox::warning(this, tr("警告"), tr("跳过无效路径：%1").arg(sourcePath));
+                continue;
+            }
         }
 
         if (files.isEmpty()) {
@@ -243,17 +267,65 @@ void extra::performBackup(bool isScheduled)
             continue;
         }
 
-        // 提取源文件或目录的名称
-        QFileInfo sourceInfo(entry.sourcePath);
-        QString sourceName = sourceInfo.fileName();
+        // 生成文件的相对路径
+        foreach (const QFileInfo &fileInfo, files) {
+            QString relativePath = QDir(baseDirectory).relativeFilePath(fileInfo.absoluteFilePath());
+            relativePaths.append(relativePath);
+        }
 
-        // 生成备份文件名
-        QString outputFileName = "backup_" + sourceName + "_"
-                                 + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss")
-                                 + ".dat";
-        QString outputFilePath = entry.backupPath + "/" + outputFileName;
+        // 确定备份文件名
+        QString outputFilePath;
+        QString uniqueFileName;
+        if (sourcePaths.size() == 1) { // 单个路径（文件或目录）
+            QFileInfo singlePathInfo(sourcePaths.first());
+            if (singlePathInfo.isDir()) {
+                uniqueFileName = singlePathInfo.fileName() + "_backup";
+                outputFilePath = entry.backupPath + "/" + uniqueFileName + "_" +
+                                 QDateTime::currentDateTime().toString("yyyyMMddHHmmss") + ".dat";
+            } else {
+                uniqueFileName = singlePathInfo.completeBaseName() + "_backup";
+                outputFilePath = entry.backupPath + "/" + uniqueFileName + "_" +
+                                 QDateTime::currentDateTime().toString("yyyyMMddHHmmss") + ".dat";
+            }
+        } else { // 多个路径
+            uniqueFileName = "multi_backup";
+            outputFilePath = entry.backupPath + "/" + uniqueFileName + "_" +
+                             QDateTime::currentDateTime().toString("yyyyMMddHHmmss") + ".dat";
+        }
 
-        if (packFiles(files, outputFilePath, entry.isDirectory)) {
+        // 删除同名但时间较旧的备份文件
+        QDir backupDir(entry.backupPath);
+        QStringList filters = { uniqueFileName + "_*.dat.gz" }; // 查找同名的压缩备份文件
+        QStringList backupFiles = backupDir.entryList(filters, QDir::Files, QDir::Time); // 按时间排序
+
+        // 遍历同名文件，删除时间较旧的文件
+        for (const QString &backupFile : backupFiles) {
+            QString fullPath = entry.backupPath + "/" + backupFile;
+            if (fullPath != outputFilePath + ".gz") { // 保留当前备份文件
+                QFile::remove(fullPath);
+            }
+        }
+
+        // 创建模态进度对话框
+        QProgressDialog progressDialog(tr("备份进行中，请稍候..."), tr("取消"), 0, files.size(), this);
+        progressDialog.setWindowModality(Qt::ApplicationModal);
+        progressDialog.setWindowTitle(tr("备份进度"));
+        progressDialog.setCancelButton(nullptr); // 禁止取消
+        progressDialog.show();
+
+        // 调用打包函数
+        bool success = packFiles(files, relativePaths, outputFilePath, rootDirectoryName, progressDialog);
+
+        // 压缩备份文件
+        if (success) {
+            QString compressedFilePath = outputFilePath + ".gz";
+            compressWithZlib(outputFilePath, compressedFilePath);
+            QFile::remove(outputFilePath); // 删除未压缩的临时备份文件
+        }
+
+        // 显示备份结果
+        progressDialog.setValue(files.size()); // 更新进度
+        if (success) {
             QMessageBox::information(this, tr("成功"), successMessage);
         } else {
             QMessageBox::critical(this, tr("错误"), failureMessage);
@@ -278,86 +350,6 @@ void extra::collectFiles(const QString &dirPath, QList<QFileInfo> &files)
             files.append(entry);
         }
     }
-}
-
-bool extra::packFiles(const QList<QFileInfo> &files,
-                      const QString &outputFilePath,
-                      bool isDirectoryPack)
-{
-    QFile outputFile(outputFilePath);
-    if (!outputFile.open(QIODevice::WriteOnly)) {
-        return false;
-    }
-
-    QDataStream out(&outputFile);
-    out.setByteOrder(QDataStream::LittleEndian); // 设置字节序，确保一致性
-
-    // 记录原始目录的根路径
-    QString originalRootPath;
-    if (isDirectoryPack && !files.isEmpty()) {
-        originalRootPath = QFileInfo(files.first().absoluteFilePath()).absolutePath();
-    }
-
-    // 写入全局元数据
-    QByteArray globalMetadata(METADATA_SIZE, '\0');
-    QDataStream globalMetaStream(&globalMetadata, QIODevice::WriteOnly);
-    globalMetaStream.setByteOrder(QDataStream::LittleEndian);
-    globalMetaStream << isDirectoryPack;
-    if (isDirectoryPack) {
-        QByteArray originalRootPathBytes = originalRootPath.toUtf8();
-        globalMetaStream << originalRootPathBytes;
-    }
-    out.writeRawData(globalMetadata.constData(), METADATA_SIZE);
-
-    foreach (const QFileInfo &fileInfo, files) {
-        if (fileInfo.isFile()) {
-            // 文件元数据
-            QByteArray filePathBytes = fileInfo.absoluteFilePath().toUtf8();
-            quint64 fileSize = fileInfo.size();
-
-            // 计算文件的 CRC32 校验值
-            QFile inputFile(fileInfo.absoluteFilePath());
-            quint32 crc32;
-            if (inputFile.open(QIODevice::ReadOnly)) {
-                QByteArray fileData = inputFile.readAll();
-                crc32 = qChecksum(fileData.constData(), fileData.size());
-                inputFile.close();
-            } else {
-                qDebug() << "can't open input file:" << fileInfo.absoluteFilePath();
-                return false;
-            }
-
-            // 确保元数据部分为512字节
-            QByteArray metadata(METADATA_SIZE, '\0');
-            QDataStream metaStream(&metadata, QIODevice::WriteOnly);
-            metaStream.setByteOrder(QDataStream::LittleEndian);
-            metaStream << filePathBytes;
-            metaStream << fileSize;
-            metaStream << crc32; // 添加 CRC32 校验值
-
-            // 写入元数据
-            out.writeRawData(metadata.constData(), METADATA_SIZE);
-
-            // 读取文件数据并加密
-            if (inputFile.open(QIODevice::ReadOnly)) {
-                QByteArray fileData = inputFile.readAll();
-                QByteArray encryptedData = xorEncryptDecrypt(fileData, password.toUtf8());
-                out.writeRawData(encryptedData.constData(), encryptedData.size());
-                inputFile.close();
-            } else {
-                qDebug() << "can't open input file:" << fileInfo.absoluteFilePath();
-                return false;
-            }
-
-            // 写入填充
-            quint64 paddingSize = calculatePadding(fileSize);
-            QByteArray padding(paddingSize, '\0');
-            out.writeRawData(padding.constData(), padding.size());
-        }
-    }
-
-    outputFile.close();
-    return true;
 }
 
 QByteArray extra::xorEncryptDecrypt(const QByteArray &data, const QByteArray &key)
@@ -469,4 +461,159 @@ void extra::filter_click()
     emit sendPath(ui->sourcePath->text());
     this->hide();
     filter->show();
+}
+
+bool extra::packFiles(const QList<QFileInfo> &files, const QStringList &relativePaths,
+                       const QString &outputFilePath, const QString &rootDirectoryName,
+                       QProgressDialog &progressDialog)
+{
+    QFile outputFile(outputFilePath);
+    if (!outputFile.open(QIODevice::WriteOnly)) {
+        QMessageBox::critical(this, tr("错误"), tr("无法创建备份文件：%1").arg(outputFilePath));
+        return false;
+    }
+
+    QDataStream out(&outputFile);
+    out.setByteOrder(QDataStream::LittleEndian); // 设置字节序，确保一致性
+
+    // 写入全局元数据
+    QByteArray globalMetadata(METADATA_SIZE, '\0');
+    QDataStream globalMetaStream(&globalMetadata, QIODevice::WriteOnly);
+    globalMetaStream.setByteOrder(QDataStream::LittleEndian);
+
+    // 写入目录名称到全局元数据（如果有）
+    if (!rootDirectoryName.isEmpty()) {
+        globalMetaStream << rootDirectoryName.toUtf8();
+    }
+
+    out.writeRawData(globalMetadata.constData(), METADATA_SIZE);
+
+    // 逐个文件写入
+    for (int i = 0; i < files.size(); ++i) {
+        const QFileInfo &fileInfo = files.at(i);
+        const QString &relativePath = relativePaths.at(i);
+
+        QFile inputFile(fileInfo.absoluteFilePath());
+        if (!inputFile.open(QIODevice::ReadOnly)) {
+            QMessageBox::warning(this, tr("警告"), tr("无法读取文件：%1").arg(fileInfo.fileName()));
+            continue;
+        }
+
+        QByteArray fileData = inputFile.readAll();
+        inputFile.close();
+
+        // 加密文件数据
+        QByteArray encryptedData = xorEncryptDecrypt(fileData, password.toUtf8());
+
+        // 计算元数据
+        quint32 crc32 = qChecksum(fileData.constData(), fileData.size());
+        quint64 compressedSize = encryptedData.size();
+        quint64 fileSize = compressedSize;
+
+        QByteArray metadata;
+        QDataStream metaStream(&metadata, QIODevice::WriteOnly);
+        metaStream.setByteOrder(QDataStream::LittleEndian);
+        metaStream << relativePath.toUtf8(); // 写入相对路径
+        metaStream << fileSize;
+        metaStream << crc32;
+
+        // 确保元数据大小固定
+        if (metadata.size() < METADATA_SIZE) {
+            metadata.append(QByteArray(METADATA_SIZE - metadata.size(), '\0'));
+        } else if (metadata.size() > METADATA_SIZE) {
+            metadata = metadata.left(METADATA_SIZE);
+        }
+
+        out.writeRawData(metadata.constData(), METADATA_SIZE);
+        out.writeRawData(encryptedData.constData(), encryptedData.size());
+
+        quint64 paddingSize = calculatePadding(compressedSize);
+        if (paddingSize > 0) {
+            QByteArray padding(paddingSize, '\0');
+            out.writeRawData(padding.constData(), padding.size());
+        }
+
+        // 更新进度条
+        progressDialog.setValue(i + 1);
+        QCoreApplication::processEvents(); // 刷新 UI 事件循环
+    }
+
+    outputFile.close();
+    return true;
+}
+
+
+void extra::clearAllText()
+{
+    // 遍历当前窗口的所有子控件
+    foreach (QObject *child, this->children()) {
+        // 如果是 QLineEdit
+        if (QLineEdit *lineEdit = qobject_cast<QLineEdit *>(child)) {
+            lineEdit->clear();
+        }
+    }
+
+    qDebug() << "All text fields have been cleared!";
+}
+
+void extra::compressWithZlib(const QString &inputFilePath, const QString &outputFilePath)
+{
+    QFile inputFile(inputFilePath);
+    if (!inputFile.open(QIODevice::ReadOnly)) {
+        qDebug() << "Cannot open input file for reading.";
+        return;
+    }
+
+    QFile outputFile(outputFilePath);
+    if (!outputFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "Cannot open output file for writing.";
+        return;
+    }
+
+    // 使用分块读取文件，避免一次性加载整个文件
+    z_stream strm;
+    memset(&strm, 0, sizeof(strm));
+    deflateInit(&strm, Z_DEFAULT_COMPRESSION);
+
+    QByteArray buffer;
+    char tempBuffer[4096];  // 定义一个较小的缓冲区
+
+    int flush;
+    do {
+        // 按块读取文件数据
+        buffer = inputFile.read(4096);
+        if (buffer.isEmpty()) {
+            flush = Z_FINISH;
+        } else {
+            flush = Z_NO_FLUSH;
+        }
+
+        strm.avail_in = buffer.size();
+        strm.next_in = reinterpret_cast<Bytef*>(buffer.data());
+
+        do {
+            strm.avail_out = sizeof(tempBuffer);
+            strm.next_out = reinterpret_cast<Bytef*>(tempBuffer);
+
+            deflate(&strm, flush);
+
+            outputFile.write(tempBuffer, sizeof(tempBuffer) - strm.avail_out);
+
+        } while (strm.avail_out == 0);
+
+    } while (flush != Z_FINISH);
+
+    deflateEnd(&strm);
+
+    inputFile.close();
+    outputFile.close();
+
+    // 删除原始文件
+    if (QFile::remove(inputFilePath)) {
+        qDebug() << "Original file deleted successfully:" << inputFilePath;
+    } else {
+        qDebug() << "Failed to delete original file:" << inputFilePath;
+    }
+
+    qDebug() << "File compressed successfully with zlib!";
 }
